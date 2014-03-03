@@ -1,0 +1,25 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteTemplate.master.cs" Inherits="ImageGallery.Pages.Shared.SiteTemplate" ViewStateMode="Disabled" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <link href="~/Content/style.css" rel="stylesheet" />
+    <title>Anton Ledström - Projekt</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div>
+            <p class="heading">2-1 - Galleriet</p>
+            <h1>Bildgalleriet </h1>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
+            </asp:ContentPlaceHolder>
+
+            <p class="footer">
+                Anton Ledström
+            </p>
+        </div>
+    </form>
+</body>
+</html>
