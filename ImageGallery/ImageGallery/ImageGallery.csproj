@@ -28,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsA889.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,6 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsA889.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +59,12 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\Penguins.jpg" />
     <Content Include="Content\style.css" />
     <Content Include="Global.asax" />
-    <Content Include="Pages\ImageGalleryPages\Default.aspx" />
+    <Content Include="Pages\ImageGalleryPages\ListAlbums.aspx" />
+    <Content Include="Pages\ImageGalleryPages\ListPictures.aspx" />
+    <Content Include="Pages\Shared\ViewEditAlbumPictures.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -69,16 +74,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Model\Album.cs" />
+    <Compile Include="Model\DAL\AlbumDAL.cs" />
     <Compile Include="Model\DAL\DALBase.cs" />
     <Compile Include="Model\DAL\ImageGalleryDAL.cs" />
     <Compile Include="Model\Picture.cs" />
+    <Compile Include="Model\PictureBase.cs" />
     <Compile Include="Model\Service.cs" />
-    <Compile Include="Pages\ImageGalleryPages\Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Pages\ImageGalleryPages\ListAlbums.aspx.cs">
+      <DependentUpon>ListAlbums.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\ImageGalleryPages\Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Pages\ImageGalleryPages\ListAlbums.aspx.designer.cs">
+      <DependentUpon>ListAlbums.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ImageGalleryPages\ListPictures.aspx.cs">
+      <DependentUpon>ListPictures.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ImageGalleryPages\ListPictures.aspx.designer.cs">
+      <DependentUpon>ListPictures.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\SiteTemplate.Master.cs">
       <DependentUpon>SiteTemplate.Master</DependentUpon>
@@ -86,6 +101,13 @@
     </Compile>
     <Compile Include="Pages\Shared\SiteTemplate.Master.designer.cs">
       <DependentUpon>SiteTemplate.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shared\ViewEditAlbumPictures.ascx.cs">
+      <DependentUpon>ViewEditAlbumPictures.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\ViewEditAlbumPictures.ascx.designer.cs">
+      <DependentUpon>ViewEditAlbumPictures.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -100,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Extensions\" />
+    <Folder Include="App_GlobalResources\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,16 +6,13 @@ using System.Web;
 
 namespace ImageGallery.Model
 {
-    public class Picture : PictureBase
+    public class Album
     {
-        public int PictureID { get; set; }
+        public int AlbumID { get; set; }
         
         [Required]
-        public override string Name { get; set; }
+        public string Name { get; set; }
         
-        [Required]
-        public int CategoryID { get; set; }
-
         [Required]
         public DateTime Date { get; set; }
     }
