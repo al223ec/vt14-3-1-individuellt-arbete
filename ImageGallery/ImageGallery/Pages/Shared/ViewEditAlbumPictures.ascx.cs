@@ -10,6 +10,7 @@ namespace ImageGallery.Pages.Shared
 {
     public partial class ViewEditAlbumPictures : PageBASE
     {
+        protected FileUpload FU;
         protected void Page_Load(object sender, EventArgs e)
         {
             AlbumNameLiteral.Text = AlbumName ?? "Albumname";
@@ -49,22 +50,10 @@ namespace ImageGallery.Pages.Shared
         // The id parameter name should match the DataKeyNames value set on the control
         public void PictureListView_UpdateItem(Picture picture)
         {
+            //Hur kan jag tilldela picture ett nytt album id här??? 
             if (Page.ModelState.IsValid)
             {
-                //ImageGallery.Model.Picture item = null;
-                //// Load the item here, e.g. item = MyDataLayer.Find(id);
-                //if (item == null)
-                //{
-                //    // The item wasn't found
-                //    Page.ModelState.AddModelError("", String.Format("Item with id {0} was not found", id));
-                //    return;
-                //}
-                //TryUpdateModel(item);
-                //if (Page.ModelState.IsValid)
-                //{
-                //    // Save changes here, e.g. MyDataLayer.SaveChanges();
-
-                //}
+                // Save changes here, e.g. MyDataLayer.SaveChanges();
             }
         }
 
@@ -72,6 +61,20 @@ namespace ImageGallery.Pages.Shared
         public void PictureListView_DeleteItem(int pictureID)
         {
 
+        }
+
+        public IEnumerable<Category> CategoryDropDownList_GetData()
+        {
+            return Service.GetAllCategorys();
+        }
+        protected void PictureListView_ItemDataBound(object sender, ListViewItemEventArgs e)
+        {
+            var label = e.Item.FindControl("CategoryValueLabel") as Label;
+            if (label != null)
+            {
+                var pic = (Picture)e.Item.DataItem;
+                label.Text = Service.GetAllCategorys().Single(cat => cat.CategoryID == pic.CategoryID).Value;
+            }
         }
     }
 }

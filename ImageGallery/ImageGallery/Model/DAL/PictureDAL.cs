@@ -7,7 +7,7 @@ using System.Web;
 
 namespace ImageGallery.Model.DAL
 {
-    public class ImageGalleryDAL : DALBase
+    public class PictureDAL : DALBase
     {
         /// <summary>
         /// Hämtar alla poster i tabellen pictures
@@ -30,6 +30,7 @@ namespace ImageGallery.Model.DAL
                     var nameIndex = reader.GetOrdinal("Name");
                     var dateIndex = reader.GetOrdinal("Date");
                     var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                    var extensionIndex = reader.GetOrdinal("Extension");
 
                     while (reader.Read())
                     {
@@ -38,7 +39,8 @@ namespace ImageGallery.Model.DAL
                             PictureID = reader.GetInt32(pictureIDIndex),
                             Name = reader.GetString(nameIndex),
                             Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex)
+                            CategoryID = reader.GetInt32(categoryIDIndex),
+                            Extension = reader.GetString(extensionIndex),
                         });
                     }
                 }

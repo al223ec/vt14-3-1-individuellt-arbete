@@ -8,6 +8,6 @@ namespace ImageGallery.Model
     public class Category
     {
         public int CategoryID { get; set; }
-        public string category { get; set; }
+        public string Value { get; set; }
     }
 }

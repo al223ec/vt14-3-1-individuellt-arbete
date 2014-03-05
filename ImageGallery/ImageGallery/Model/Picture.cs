@@ -13,11 +13,15 @@ namespace ImageGallery.Model
         [Required(ErrorMessage = "Bilden måste ha ett namn")]
         [StringLength(35, ErrorMessage = "Bildnamnet kan som mest bestå av 35 tecken.")]
         public override string Name { get; set; }
-        
+
         [Required]
         public int CategoryID { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "Bilden måste ha en filändelse")]
+        [StringLength(6, ErrorMessage = "Filändelsen kan som mest bestå av 6 tecken.")]
+        public string Extension { get; set; }
     }
 }
