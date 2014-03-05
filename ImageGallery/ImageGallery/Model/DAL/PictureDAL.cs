@@ -85,5 +85,15 @@ namespace ImageGallery.Model.DAL
                 return pictures;
             }
         }
+
+        public Picture GetPicture(int pictureID)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddPicture(Picture picture)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

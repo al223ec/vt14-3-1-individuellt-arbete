@@ -17,6 +17,7 @@ namespace ImageGallery.Model
         private CategoryDAL _categoryDAL;
         public CategoryDAL CategoryDAL { get { return _categoryDAL ?? (_categoryDAL = new CategoryDAL()); } }
 
+#region Getpictures
         public IEnumerable<Picture> GetAllPictures()
         {
             return PictureDAL.GetAllPictures();
@@ -25,14 +26,43 @@ namespace ImageGallery.Model
         {
             return PictureDAL.GetAllPicturesFromAlbum(albumID);
         }
+        public Picture GetPicture(int pictureID)
+        {
+            return PictureDAL.GetPicture(pictureID);
+        }
+#endregion 
+        public void AddPicture(Picture picture, IEnumerable<string> albums)
+        {
+            //Kontroller objekt och albumIDt
+
+           // PictureDAL.AddPicture(picture, albumID); 
+            PictureDAL.AddPicture(picture);
+            AlbumDAL.AddAlbumAndPicture(1,1); 
+
+        }
+
         public IEnumerable<Album> GetAllAlbums()
         {
             return AlbumDAL.GetAllAlbums();
         }
-
-        public IEnumerable<Category> GetAllCategorys()
+        public Album GetAlbum(int albumID)
         {
-            var allCategorys = HttpContext.Current.Cache["Categorys"] as IEnumerable<Category>; //Cahcar denna kommer inte uppdateras
+            throw new NotImplementedException();
+        }
+        public bool AlbumExists(int albumID)
+        {
+            throw new NotImplementedException();
+        }
+            
+        public void AddAlbum(Album album)
+        {
+            //Kontrollera objektet
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Category> GetAllCategorys() //Ge möjlighet att requesta update? 
+        {
+            var allCategorys = HttpContext.Current.Cache["Categorys"] as IEnumerable<Category>; //Cahcar denna, kommer inte uppdateras
             if (allCategorys == null)
             {
                 allCategorys = CategoryDAL.GetAllCategorys();

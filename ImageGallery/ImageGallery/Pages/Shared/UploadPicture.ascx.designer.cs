@@ -40,13 +40,13 @@ namespace ImageGallery.Pages.Shared {
         protected global::System.Web.UI.WebControls.Label NameLabel;
         
         /// <summary>
-        /// Name control.
+        /// NameTextBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Name;
+        protected global::System.Web.UI.WebControls.TextBox NameTextBox;
         
         /// <summary>
         /// CategoryLabel control.
@@ -74,6 +74,15 @@ namespace ImageGallery.Pages.Shared {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList AlbumCheckBoxList;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// UploadButton control.

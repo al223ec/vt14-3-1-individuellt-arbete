@@ -13,5 +13,6 @@ namespace ImageGallery.Pages
 
         private Service _service; //chacha denna??
         public Service Service { get { return _service ?? (_service = new Service()); } }
+
     }
 }

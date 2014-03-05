@@ -4,9 +4,8 @@
     <h2>Ladda upp bild</h2>
     <asp:FileUpload ID="ImageFileUpload" runat="server" />
 
-
     <asp:Label ID="NameLabel" runat="server" Text="Bildnamn:" />
-    <asp:TextBox ID="Name" runat="server" MaxLength="35" />
+    <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" />
 
     <asp:Label ID="CategoryLabel" runat="server" Text="Kategori:" />
     <asp:DropDownList ID="CategoryDropDownList" runat="server"
@@ -22,9 +21,8 @@
             DataTextField="Name"
             DataValueField="AlbumID" />
     </p>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="NameTextBox" />
     <asp:Button ID="UploadButton" runat="server" Text="Ladda upp" OnClick="UploadButton_Click" />
-    <%--        <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Insert" Text="Lägg till" />--%>
-    <%--<asp:LinkButton ID="LinkButton2" runat="server" CommandName="Cancel" Text="Rensa" CausesValidation="false" />--%>
 </asp:Panel>
 
 <%-- Validering, tomt fält och REGEX --%>

@@ -44,5 +44,10 @@ namespace ImageGallery.Model.DAL
                 return albums;
             }
         }
+
+        public void AddAlbumAndPicture(int albumID, int pictureID)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

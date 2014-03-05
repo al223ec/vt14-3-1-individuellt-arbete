@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsFA3.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsC161.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsFA3.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsC161.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -76,7 +76,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Model\Album.cs" />
-    <Compile Include="Model\AlbumPicture.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\DAL\AlbumDAL.cs" />
     <Compile Include="Model\DAL\CategoryDAL.cs" />

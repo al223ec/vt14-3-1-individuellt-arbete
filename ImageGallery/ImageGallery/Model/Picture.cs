@@ -23,5 +23,6 @@ namespace ImageGallery.Model
         [Required(ErrorMessage = "Bilden måste ha en filändelse")]
         [StringLength(6, ErrorMessage = "Filändelsen kan som mest bestå av 6 tecken.")]
         public string Extension { get; set; }
+
     }
 }
