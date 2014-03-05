@@ -9,8 +9,9 @@ namespace ImageGallery.Model
     public class Picture : PictureBase
     {
         public int PictureID { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "Bilden måste ha ett namn")]
+        [StringLength(35, ErrorMessage = "Bildnamnet kan som mest bestå av 35 tecken.")]
         public override string Name { get; set; }
         
         [Required]

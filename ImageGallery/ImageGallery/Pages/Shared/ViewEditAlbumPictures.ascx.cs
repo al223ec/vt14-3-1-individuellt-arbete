@@ -8,17 +8,18 @@ using System.Web.UI.WebControls;
 
 namespace ImageGallery.Pages.Shared
 {
-    public partial class ViewEditAlbumPictures : System.Web.UI.UserControl
+    public partial class ViewEditAlbumPictures : PageBASE
     {
-        public int? AlbumID { get; set; }
-        public string AlbumName { get; set; }
-
-        private Service _service;
-        public Service Service { get { return _service ?? (_service = new Service()); } }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             AlbumNameLiteral.Text = AlbumName ?? "Albumname";
+
+            string imgName = Request.QueryString["name"];
+            if (imgName != null)
+            {
+                MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
+                MainImage.Visible = true;
+            }
         }
 
         // The return type can be changed to IEnumerable, however to support
@@ -31,40 +32,46 @@ namespace ImageGallery.Pages.Shared
         {
             if (AlbumID != null)
             {
-                //return Service.GetAllPicturesFromAlbum((int)AlbumID);
-                return Service.GetAllPictures();
+                return Service.GetAllPicturesFromAlbum((int)AlbumID);
+                //return Service.GetAllPictures();
             }
-            return null; 
+            return null;
         }
 
-        public void PictureListView_InsertItem()
+        public void PictureListView_InsertItem(Picture picture)
         {
-            var item = new ImageGallery.Model.Picture();
-            TryUpdateModel(item);
             if (Page.ModelState.IsValid)
             {
                 // Save changes here
-
             }
         }
 
         // The id parameter name should match the DataKeyNames value set on the control
-        public void PictureListView_UpdateItem(int id)
+        public void PictureListView_UpdateItem(Picture picture)
         {
-            ImageGallery.Model.Picture item = null;
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (item == null)
-            {
-                // The item wasn't found
-                Page.ModelState.AddModelError("", String.Format("Item with id {0} was not found", id));
-                return;
-            }
-            TryUpdateModel(item);
             if (Page.ModelState.IsValid)
             {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
+                //ImageGallery.Model.Picture item = null;
+                //// Load the item here, e.g. item = MyDataLayer.Find(id);
+                //if (item == null)
+                //{
+                //    // The item wasn't found
+                //    Page.ModelState.AddModelError("", String.Format("Item with id {0} was not found", id));
+                //    return;
+                //}
+                //TryUpdateModel(item);
+                //if (Page.ModelState.IsValid)
+                //{
+                //    // Save changes here, e.g. MyDataLayer.SaveChanges();
 
+                //}
             }
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void PictureListView_DeleteItem(int pictureID)
+        {
+
         }
     }
 }

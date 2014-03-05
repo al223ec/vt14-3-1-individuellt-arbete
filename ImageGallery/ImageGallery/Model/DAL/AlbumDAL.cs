@@ -9,7 +9,6 @@ namespace ImageGallery.Model.DAL
 {
     public class AlbumDAL : DALBase
     {
-
         /// <summary>
         /// Hämtar alla poster i tabellen album
         /// </summary>

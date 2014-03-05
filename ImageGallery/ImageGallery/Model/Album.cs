@@ -9,11 +9,12 @@ namespace ImageGallery.Model
     public class Album
     {
         public int AlbumID { get; set; }
-        
-        [Required]
+
+        [Required(ErrorMessage = "Ett album måste ha ett namn")]
+        [StringLength(35, ErrorMessage = "Albumnamnet kan som mest bestå av 35 tecken.")]
         public string Name { get; set; }
-        
+
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set;  } //Date kommer databasen lösa, när man skapade albumet
     }
 }
