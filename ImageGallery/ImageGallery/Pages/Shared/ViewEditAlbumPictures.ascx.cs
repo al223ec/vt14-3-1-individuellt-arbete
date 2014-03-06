@@ -10,7 +10,6 @@ namespace ImageGallery.Pages.Shared
 {
     public partial class ViewEditAlbumPictures : PageBASE
     {
-        protected FileUpload FU;
         protected void Page_Load(object sender, EventArgs e)
         {
             AlbumNameLiteral.Text = AlbumName ?? "Albumname";
@@ -29,7 +28,7 @@ namespace ImageGallery.Pages.Shared
         //     int startRowIndex
         //     out int totalRowCount
         //     string sortByExpression
-        public IEnumerable<ImageGallery.Model.Picture> PictureListView_GetData()
+        public IEnumerable<Picture> PictureListView_GetData()
         {
             if (AlbumID != null)
             {
@@ -39,28 +38,10 @@ namespace ImageGallery.Pages.Shared
             return null;
         }
 
-        public void PictureListView_InsertItem(Picture picture)
-        {
-            if (Page.ModelState.IsValid)
-            {
-                // Save changes here
-            }
-        }
-
-        // The id parameter name should match the DataKeyNames value set on the control
-        public void PictureListView_UpdateItem(Picture picture)
-        {
-            //Hur kan jag tilldela picture ett nytt album id här??? 
-            if (Page.ModelState.IsValid)
-            {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
-            }
-        }
-
         // The id parameter name should match the DataKeyNames value set on the control
         public void PictureListView_DeleteItem(int pictureID)
         {
-
+            Service.DeletePicture(pictureID); 
         }
 
         public IEnumerable<Category> CategoryDropDownList_GetData()

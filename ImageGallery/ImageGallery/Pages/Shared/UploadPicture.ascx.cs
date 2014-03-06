@@ -12,16 +12,21 @@ namespace ImageGallery.Pages.Shared
     {
         public int? PictureID { get; set; } //Om denna är set kommer denna class användas som edit också
 
+        protected Picture CurrentPicture { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (AlbumID != null)
-            {
-                //TODO: sätt ett förvalt värde om värden har skickats med
-            }
             if (PictureID != null)
             {
                 //TODO: Hämta aktuell bild och sätt värden
-                Service.GetPicture((int)PictureID);
+                CurrentPicture = Service.GetPicture((int)PictureID);
+
+                MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
+                ImageNameLiteral.Text = CurrentPicture.Name;
+
+                MainImage.Visible = true;
+                ImageNameLiteral.Visible = true;
+
+                NameTextBox.Text = CurrentPicture.Name;
             }
         }
 
@@ -30,35 +35,61 @@ namespace ImageGallery.Pages.Shared
             return Service.GetAllCategorys();
         }
 
-        public IEnumerable<Album> AlbumCheckBoxList_GetData()
+        //public IEnumerable<Album> AlbumCheckBoxList_GetData()
+        //{
+        //    return Service.GetAllAlbums();
+        //}
+
+        public IEnumerable<Album> AlbumRadioButtonList_GetData()
         {
             return Service.GetAllAlbums();
         }
 
+        public void AlbumRadioButtonList_DataBound(object sender, EventArgs e)
+        {
+            //TODO: sätt ett förvalt värde om värden har skickats med
+            if (AlbumID != null)
+            {
+                var item = sender as RadioButtonList;
+                if (item != null)
+                {
+
+                }
+            }
+        }
         protected void UploadButton_Click(object sender, EventArgs e)
         {
             Page.Validate();
             if (Page.IsValid)
             {
-                //Validering,
-                if (ImageFileUpload.PostedFile.ContentLength != 0)
-                {
-                    PictureExtensions.SaveImage(ImageFileUpload.PostedFile.InputStream, ImageFileUpload.PostedFile.FileName);
+                if (CurrentPicture != null)
+                { 
+                    //Uppdaterar en existerande bild
+                    throw new NotImplementedException(); 
                 }
                 else
                 {
-                    throw new ApplicationException("Ingen fil är vald"); 
-                   
-                }
-                var picture = new Picture
-                {
-                    Name = NameTextBox.Text,
-                    CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value)
-                };
+                    //Validering,
+                    if (ImageFileUpload.PostedFile.ContentLength != 0)
+                    {
+                        // PictureExtensions.SaveImage(ImageFileUpload.PostedFile.InputStream, ImageFileUpload.PostedFile.FileName);
+                    }
+                    else
+                    {
+                        //throw new ApplicationException("Ingen fil är vald"); 
+                    }
+                    var picture = new Picture
+                    {
+                        Name = NameTextBox.Text,
+                        CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value),
+                       Extension = ".jpg",
+                    };
 
-                var selectedValues = AlbumCheckBoxList.Items.Cast<ListItem>().Where(li => li.Selected)
-                   .Select(li => li.Value).ToList();
-                Service.AddPicture(picture, selectedValues); 
+                    Service.AddPictureToAlbum(picture, int.Parse(AlbumRadioButtonList.SelectedValue));
+                }
+                //var selectedValues = AlbumCheckBoxList.Items.Cast<ListItem>().Where(li => li.Selected)
+                //   .Select(li => li.Value).ToList();
+                //Service.AddPicture(picture, selectedValues); 
             }
         }
     }

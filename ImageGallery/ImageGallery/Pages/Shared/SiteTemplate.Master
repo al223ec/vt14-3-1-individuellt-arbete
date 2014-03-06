@@ -15,7 +15,6 @@
             <h1>Bildgalleriet </h1>
             <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
             </asp:ContentPlaceHolder>
-
             <p class="footer">
                 Anton Ledström
             </p>

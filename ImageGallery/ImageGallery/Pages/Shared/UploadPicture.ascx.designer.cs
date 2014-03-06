@@ -13,6 +13,24 @@ namespace ImageGallery.Pages.Shared {
     public partial class UploadPicture {
         
         /// <summary>
+        /// MainImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image MainImage;
+        
+        /// <summary>
+        /// ImageNameLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ImageNameLiteral;
+        
+        /// <summary>
         /// UploadPanel control.
         /// </summary>
         /// <remarks>
@@ -67,22 +85,22 @@ namespace ImageGallery.Pages.Shared {
         protected global::System.Web.UI.WebControls.DropDownList CategoryDropDownList;
         
         /// <summary>
-        /// AlbumCheckBoxList control.
+        /// AlbumRadioButtonList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList AlbumCheckBoxList;
+        protected global::System.Web.UI.WebControls.RadioButtonList AlbumRadioButtonList;
         
         /// <summary>
-        /// RequiredFieldValidator1 control.
+        /// RequiredFieldValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator;
         
         /// <summary>
         /// UploadButton control.

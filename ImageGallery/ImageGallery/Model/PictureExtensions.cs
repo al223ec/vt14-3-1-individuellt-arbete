@@ -24,5 +24,12 @@ namespace ImageGallery.Model
             throw new NotImplementedException();
         }
 
+        public static bool CompareImage(Image image)
+        {
+
+            //Hämta picture bilden och gämför?? Eller ladda upp på nytt?? 
+            throw new NotImplementedException();
+
+        }
     }
 }

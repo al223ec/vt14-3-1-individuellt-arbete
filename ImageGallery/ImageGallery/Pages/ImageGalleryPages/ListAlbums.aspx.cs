@@ -28,5 +28,35 @@ namespace ImageGallery.Pages.ImageGalleryPages
         {
             return Service.GetAllAlbums();
         }
+
+        public void AlbumListView_InsertItem()
+        {
+            var item = new ImageGallery.Model.Album();
+            TryUpdateModel(item);
+            if (ModelState.IsValid)
+            {
+                // Save changes here
+
+            }
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void AlbumListView_UpdateItem(int id)
+        {
+            ImageGallery.Model.Album item = null;
+            // Load the item here, e.g. item = MyDataLayer.Find(id);
+            if (item == null)
+            {
+                // The item wasn't found
+                ModelState.AddModelError("", String.Format("Item with id {0} was not found", id));
+                return;
+            }
+            TryUpdateModel(item);
+            if (ModelState.IsValid)
+            {
+                // Save changes here, e.g. MyDataLayer.SaveChanges();
+
+            }
+        }
     }
 }

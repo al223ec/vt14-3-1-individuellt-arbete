@@ -15,6 +15,7 @@ namespace ImageGallery.App_Start
             routeCollection.MapPageRoute("ViewAlbumPictures",   "album/{id}/{name}",       "~/Pages/ImageGalleryPages/ListPictures.aspx");
 
             routeCollection.MapPageRoute("ListPictures",        "Bilder",           "~/Pages/ImageGalleryPages/ListPictures.aspx");
+            routeCollection.MapPageRoute("EditPicture", "Redigerabild/{id}/{name}/{pictureID}", "~/Pages/ImageGalleryPages/EditPicture.aspx"); 
         }
     }
 }

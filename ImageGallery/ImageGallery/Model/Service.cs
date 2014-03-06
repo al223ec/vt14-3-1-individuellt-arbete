@@ -31,14 +31,27 @@ namespace ImageGallery.Model
             return PictureDAL.GetPicture(pictureID);
         }
 #endregion 
-        public void AddPicture(Picture picture, IEnumerable<string> albums)
+        public void AddPicture(Picture picture, int albumID) //Bör ta en array om jag ska uppdatera bilden till många album
         {
             //Kontroller objekt och albumIDt
+
+            if (picture.PictureID == 0) //Ny bild
+            {
+
+            }
+            else
+            {
+               PictureDAL.UpdatePicture(picture);
+            }
 
            // PictureDAL.AddPicture(picture, albumID); 
             PictureDAL.AddPicture(picture);
             AlbumDAL.AddAlbumAndPicture(1,1); 
+        }
 
+        public void DeletePicture(int pictureID)
+        {
+            PictureDAL.DeletePicture(pictureID);
         }
 
         public IEnumerable<Album> GetAllAlbums()
@@ -66,9 +79,14 @@ namespace ImageGallery.Model
             if (allCategorys == null)
             {
                 allCategorys = CategoryDAL.GetAllCategorys();
-                HttpContext.Current.Cache.Insert("Categorys", allCategorys, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero); //tio min sen slängs cachen
+                HttpContext.Current.Cache.Insert("Categorys", allCategorys, null, DateTime.Now.AddMinutes(10), TimeSpan.Zero);
             }
             return allCategorys;
+        }
+
+        public void AddPictureToAlbum(Picture picture, int albumID)
+        {
+            PictureDAL.AddPictureToAlbum(picture, albumID);
         }
     }
 }

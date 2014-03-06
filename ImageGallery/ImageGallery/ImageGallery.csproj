@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsC161.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vs8168.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsC161.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vs8168.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -62,6 +62,7 @@
     <Content Include="Content\Images\Penguins.jpg" />
     <Content Include="Content\style.css" />
     <Content Include="Global.asax" />
+    <Content Include="Pages\ImageGalleryPages\EditPicture.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListAlbums.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListPictures.aspx" />
     <Content Include="Pages\Shared\UploadPicture.ascx" />
@@ -85,6 +86,13 @@
     <Compile Include="Model\PictureBase.cs" />
     <Compile Include="Model\PictureExtensions.cs" />
     <Compile Include="Model\Service.cs" />
+    <Compile Include="Pages\ImageGalleryPages\EditPicture.aspx.cs">
+      <DependentUpon>EditPicture.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ImageGalleryPages\EditPicture.aspx.designer.cs">
+      <DependentUpon>EditPicture.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ImageGalleryPages\ListAlbums.aspx.cs">
       <DependentUpon>ListAlbums.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

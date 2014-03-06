@@ -11,10 +11,11 @@ namespace ImageGallery.Model
     {
         public static readonly string saveFilePath;
         public abstract string Name { get; set; } //Ska jag spara med filändelse eller ha en till kolumn där man sparar filändelsen??
+        public abstract string Extension { get; set; } 
         public Image Picture { get; set; }
 
         public string GetTumbFileName{
-            get { return string.Format("{0}{1}{2}", Path.GetFileNameWithoutExtension(Name), "_thumb", Path.GetExtension(Name)); }
+            get { return string.Format("{0}{1}{2}", Name, "_thumb", Extension); }
         }
     }
 }
