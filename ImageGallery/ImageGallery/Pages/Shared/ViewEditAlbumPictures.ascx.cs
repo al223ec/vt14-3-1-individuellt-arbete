@@ -14,12 +14,12 @@ namespace ImageGallery.Pages.Shared
         {
             AlbumNameLiteral.Text = AlbumName ?? "Albumname";
 
-            string imgName = Request.QueryString["name"];
-            if (imgName != null)
-            {
-                MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
-                MainImage.Visible = true;
-            }
+            //string imgName = Request.QueryString["name"];
+            //if (imgName != null)
+            //{
+            //    MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
+            //    MainImage.Visible = true;
+            //}
         }
 
         // The return type can be changed to IEnumerable, however to support

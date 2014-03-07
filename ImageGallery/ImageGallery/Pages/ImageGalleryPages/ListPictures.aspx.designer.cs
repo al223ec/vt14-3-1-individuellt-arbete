@@ -13,6 +13,24 @@ namespace ImageGallery.Pages.ImageGalleryPages {
     public partial class ListPictures {
         
         /// <summary>
+        /// ImageNameLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal ImageNameLiteral;
+        
+        /// <summary>
+        /// MainImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image MainImage;
+        
+        /// <summary>
         /// ViewEditAlbumPictures control.
         /// </summary>
         /// <remarks>

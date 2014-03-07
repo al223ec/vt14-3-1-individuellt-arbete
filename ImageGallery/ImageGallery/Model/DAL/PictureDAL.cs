@@ -180,6 +180,8 @@ namespace ImageGallery.Model.DAL
                 SqlCommand cmd = new SqlCommand("appSchema.usp_AddExistingPictureToAlbum", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
+                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+
                 cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
                 cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
 
@@ -194,8 +196,70 @@ namespace ImageGallery.Model.DAL
         /// <param name="picture">Ett existerande picture objekt</param>
         public void UpdatePicture(Picture picture)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("appSchema.usp_UpdatePicture", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
+                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
+                cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
+                cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
+                cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+            }
         }
+
+        /// <summary>
+        /// Uppdaterar en existerande bild med hjälp av ett picture objekt, samt tilldelar ett album
+        /// </summary>
+        /// <param name="picture">Ett existerande picture objekt</param>
+        public void UpdateExistingPictureToAlbum(Picture picture, int albumID)
+        {
+            if (!PictureExistInAlbum(picture.PictureID, albumID))
+            {
+                using (SqlConnection conn = CreateConnection())
+                {
+                    //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateExistingPictureToAlbum", conn); //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
+                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
+                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
+                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();//DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                }
+            }
+        }
+
+        private bool PictureExistInAlbum(int pictureID, int albumID)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("appSchema.usp_PictureExistsInAlbum", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@Exists", SqlDbType.Bit).Direction = ParameterDirection.Output;
+
+                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
+                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                conn.Open();
+
+                cmd.ExecuteNonQuery();
+
+                return (bool)cmd.Parameters["@Exists"].Value; //True om bilden redan finns i albummet pictureID:et
+            }
+        }
+
 
         /// <summary>
         /// Tar bort en bild med hjälp av ett bildID

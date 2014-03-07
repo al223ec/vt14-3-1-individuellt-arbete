@@ -12,6 +12,16 @@ namespace ImageGallery.Pages.ImageGalleryPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            string imgName = Request.QueryString["name"];
+            if (imgName != null)
+            {
+                MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
+                MainImage.Visible = true;
+
+                ImageNameLiteral.Text = imgName;
+                ImageNameLiteral.Visible = true; 
+            }
         }
     }
 }

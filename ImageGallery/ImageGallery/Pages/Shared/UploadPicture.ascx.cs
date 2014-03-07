@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -10,44 +11,28 @@ namespace ImageGallery.Pages.Shared
 {
     public partial class UploadPicture : PageBASE
     {
-        public int? PictureID { get; set; } //Om denna är set kommer denna class användas som edit också
-
-        protected Picture CurrentPicture { get; set; }
+        public int? PictureID { get; set; }
+        //Om denna är set kommer denna class användas som edit också
         protected void Page_Load(object sender, EventArgs e)
         {
             if (PictureID != null)
             {
-                //TODO: Hämta aktuell bild och sätt värden
-                CurrentPicture = Service.GetPicture((int)PictureID);
                 MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
-                ImageNameLiteral.Text = CurrentPicture.Name;
-
                 MainImage.Visible = true;
-                ImageNameLiteral.Visible = true;
-
-                NameTextBox.Text = CurrentPicture.Name;
-
-                //Snyggare lösning? 
-                for (int i = 0; i < CategoryDropDownList.Items.Count; i++)
-                {
-                    if (int.Parse(CategoryDropDownList.Items[i].Value) == CurrentPicture.CategoryID)
-                    {
-                        CategoryDropDownList.Items[i].Selected = true;
-                        break; 
-                    }
-                }
+                ViewMode = FormViewMode.Edit;
             }
         }
 
+        public FormViewMode ViewMode
+        {
+            get { return UploadFormView.DefaultMode; }
+            set { UploadFormView.DefaultMode = value; }
+        }
+        private RadioButtonList RBL { get; set; }
         public IEnumerable<Category> CategoryDropDownList_GetData()
         {
             return Service.GetAllCategorys();
         }
-
-        //public IEnumerable<Album> AlbumCheckBoxList_GetData()
-        //{
-        //    return Service.GetAllAlbums();
-        //}
 
         public IEnumerable<Album> AlbumRadioButtonList_GetData()
         {
@@ -56,59 +41,78 @@ namespace ImageGallery.Pages.Shared
 
         public void AlbumRadioButtonList_DataBound(object sender, EventArgs e)
         {
-            //TODO: sätt ett förvalt värde om värden har skickats med
-            if (PictureID != null)
+
+            var rbl = sender as RadioButtonList;
+            if (rbl != null && AlbumID != null)
             {
-                var rbl = sender as RadioButtonList;
-                if (rbl != null && AlbumID != null)
+                RBL = rbl;
+                for (int i = 0; i < rbl.Items.Count; i++)
                 {
-                    for (int i = 0; i < rbl.Items.Count; i++)
+                    if (int.Parse(rbl.Items[i].Value) == AlbumID)
                     {
-                        if (int.Parse(rbl.Items[i].Value) == AlbumID)
-                        {
-                            rbl.Items[i].Selected = true; 
-                        }
+                        rbl.Items[i].Selected = true;
                     }
                 }
             }
-        }
-        protected void UploadButton_Click(object sender, EventArgs e)
-        {
-            Page.Validate();
-            if (Page.IsValid)
-            {
-                if (CurrentPicture != null)
-                {
-                    //Uppdaterar ett existerande bild objekt
-                    CurrentPicture.Name = NameTextBox.Text;
-                    CurrentPicture.CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value);
-                    CurrentPicture.Extension = ".jpg";
 
-                    Service.AddPictureToAlbum(CurrentPicture, int.Parse(AlbumRadioButtonList.SelectedValue));
-                }
-                else
+        }
+
+        // The id parameter should match the DataKeyNames value set on the control
+        // or be decorated with a value provider attribute, e.g. [QueryString]int id
+        public Picture UploadFormView_GetItem([RouteData]int pictureID)
+        {
+            return Service.GetPicture(pictureID);
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void UploadFormView_UpdateItem(int pictureID)
+        {
+            Picture picture = Service.GetPicture(pictureID);
+            if (picture == null)
+            {
+                // The item wasn't found
+                Page.ModelState.AddModelError("", String.Format("Item with id {0} was not found", pictureID));
+                return;
+            }
+            if (Page.TryUpdateModel(picture))
+            {
+                // Save changes here, e.g. MyDataLayer.SaveChanges();
+                if (AlbumID != null)
                 {
-                    //Validering,
-                    if (ImageFileUpload.PostedFile.ContentLength != 0)
+                    if (AlbumID == int.Parse(RBL.SelectedValue)) //Nytt album inte satt
                     {
-                        // PictureExtensions.SaveImage(ImageFileUpload.PostedFile.InputStream, ImageFileUpload.PostedFile.FileName);
+                        Service.UpdatePicture(picture);
                     }
                     else
                     {
-                        //throw new ApplicationException("Ingen fil är vald"); 
+                        //throw new ApplicationException("Detta är inte implementerat fullt ut måste kunna läsa felkoder från msssql är angivet!!!");
+                        Service.AddPictureToAlbum(picture, (int)AlbumID);
                     }
-                    var picture = new Picture
-                    {
-                        Name = NameTextBox.Text,
-                        CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value),
-                        Extension = ".jpg",
-                    };
-
-                    Service.AddPictureToAlbum(picture, int.Parse(AlbumRadioButtonList.SelectedValue));
                 }
-                //var selectedValues = AlbumCheckBoxList.Items.Cast<ListItem>().Where(li => li.Selected)
-                //   .Select(li => li.Value).ToList();
-                //Service.AddPicture(picture, selectedValues); 
+                else
+                {
+                    throw new ApplicationException("Inget album är angivet!!!");
+                }
+            }
+            else
+            {
+                //Modelstate error
+            }
+        }
+
+        public void UploadFormView_InsertItem(Picture picture)
+        {
+            if (Page.ModelState.IsValid)
+            {
+                Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue));
+            }
+        }
+
+        protected void ImageFileUpload_DataBinding(object sender, EventArgs e)
+        {
+            var fileUpload = sender as FileUpload;
+            if (fileUpload != null)
+            {
             }
         }
     }

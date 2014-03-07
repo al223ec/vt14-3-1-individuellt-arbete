@@ -17,7 +17,7 @@ namespace ImageGallery.Model
         private CategoryDAL _categoryDAL;
         public CategoryDAL CategoryDAL { get { return _categoryDAL ?? (_categoryDAL = new CategoryDAL()); } }
 
-#region Getpictures
+        #region Getpictures
         public IEnumerable<Picture> GetAllPictures()
         {
             return PictureDAL.GetAllPictures();
@@ -30,28 +30,32 @@ namespace ImageGallery.Model
         {
             return PictureDAL.GetPicture(pictureID);
         }
-#endregion 
-        public void AddPicture(Picture picture, int albumID) //Bör ta en array om jag ska uppdatera bilden till många album
-        {
-            //Kontroller objekt och albumIDt
+        #endregion
+        //public void AddPicture(Picture picture, int albumID) //Bör ta en array om jag ska uppdatera bilden till många album
+        //{
+        //    //Kontroller objekt och albumIDt
 
-            if (picture.PictureID == 0) //Ny bild
-            {
+        //    if (picture.PictureID == 0) //Ny bild
+        //    {
 
-            }
-            else
-            {
-               PictureDAL.UpdatePicture(picture);
-            }
+        //    }
+        //    else
+        //    {
+        //        PictureDAL.UpdatePicture(picture);
+        //    }
 
-           // PictureDAL.AddPicture(picture, albumID); 
-            PictureDAL.AddPicture(picture);
-            AlbumDAL.AddAlbumAndPicture(1,1); 
-        }
+        //    // PictureDAL.AddPicture(picture, albumID); 
+        //    PictureDAL.AddPicture(picture);
+        //    AlbumDAL.AddAlbumAndPicture(1, 1);
+        //}
 
         public void DeletePicture(int pictureID)
         {
             PictureDAL.DeletePicture(pictureID);
+        }
+        public void UpdatePicture(Picture picture)
+        {
+            PictureDAL.UpdatePicture(picture);
         }
 
         public IEnumerable<Album> GetAllAlbums()
@@ -66,10 +70,9 @@ namespace ImageGallery.Model
         {
             throw new NotImplementedException();
         }
-            
+
         public void AddAlbum(Album album)
         {
-            //Kontrollera objektet
             throw new NotImplementedException();
         }
 
@@ -86,7 +89,15 @@ namespace ImageGallery.Model
 
         public void AddPictureToAlbum(Picture picture, int albumID)
         {
-            PictureDAL.AddPictureToAlbum(picture, albumID);
+            //Validera picture
+            if (picture.PictureID == 0) //Ny bild
+            {
+                PictureDAL.AddPictureToAlbum(picture, albumID);
+            }
+            else
+            {
+                PictureDAL.UpdateExistingPictureToAlbum(picture, albumID);
+            }
         }
     }
 }

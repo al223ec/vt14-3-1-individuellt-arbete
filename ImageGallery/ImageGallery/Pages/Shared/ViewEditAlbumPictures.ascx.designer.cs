@@ -13,15 +13,6 @@ namespace ImageGallery.Pages.Shared {
     public partial class ViewEditAlbumPictures {
         
         /// <summary>
-        /// MainImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image MainImage;
-        
-        /// <summary>
         /// AlbumNameLiteral control.
         /// </summary>
         /// <remarks>

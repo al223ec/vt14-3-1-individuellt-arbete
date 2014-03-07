@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ViewEditAlbumPictures.ascx.cs" Inherits="ImageGallery.Pages.Shared.ViewEditAlbumPictures" %>
 
 <%@ Register Src="~/Pages/Shared/UploadPicture.ascx" TagPrefix="uc1" TagName="UploadPicture" %>
-
-<asp:Image ID="MainImage" runat="server" Visible="false" />
 <h2>
     <asp:Literal ID="AlbumNameLiteral" runat="server"></asp:Literal></h2>
 <%--UpdateMethod="PictureListView_UpdateItem"--%>
@@ -39,37 +37,10 @@
             </dd>
         </dl>
     </ItemTemplate>
-
- <%--   <EditItemTemplate>
-        <%-- Redigera. --%>
-<%--        <dl>
-            <dt>
-                <asp:TextBox ID="Name" runat="server" MaxLength="35" Text='<%# BindItem.Name %>' /></dt>
-            <dd>
-                <img src="../../Content/Images/Penguins.jpg" />
-
-            </dd>
-            <dd>
-                <asp:DropDownList ID="CategoryDropDownList" runat="server" ItemType="ImageGallery.Model.Category"
-                    SelectMethod="CategoryDropDownList_GetData"
-                    DataTextField="Value"
-                    DataValueField="CategoryID"
-                    SelectedValue='<%# BindItem.CategoryID %>' />
-            </dd>
-            <dd><%#: Item.Date %></dd>
-            <dd><%#: Item.GetTumbFileName %></dd>
-            <dd>
-                <%-- "Commandknappar" --%>
-<%--                <asp:LinkButton runat="server" CommandName="Update" Text="Spara" />
-                <asp:LinkButton runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false" />
-            </dd>
-        </dl>
-    </EditItemTemplate>--%>
     <EmptyDataTemplate>
         <p>
             Fail!! Inga bilder kan hittas vg försök igen
         </p>
     </EmptyDataTemplate>
-
 </asp:ListView>
 <uc1:UploadPicture runat="server" AlbumID='<%$ RouteValue:id %>' AlbumName="<%$ RouteValue:name%>" />

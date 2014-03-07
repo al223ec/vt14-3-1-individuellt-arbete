@@ -26,8 +26,9 @@ namespace ImageGallery.Model
 
         public Picture()
         {
-            Date = DateTime.Today;
-            CategoryID = 4; 
+            Date = DateTime.Today; //default värden 
+            CategoryID = 4;
+            Extension = ".jpg";
         }
     }
 }
