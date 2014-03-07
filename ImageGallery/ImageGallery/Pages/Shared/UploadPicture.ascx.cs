@@ -13,6 +13,15 @@ namespace ImageGallery.Pages.Shared
     {
         public int? PictureID { get; set; }
         //Om denna är set kommer denna class användas som edit också
+
+        public FormViewMode ViewMode
+        {
+            get { return UploadFormView.DefaultMode; }
+            set { UploadFormView.DefaultMode = value; }
+        }
+        private RadioButtonList RBL { get; set; }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (PictureID != null)
@@ -23,12 +32,7 @@ namespace ImageGallery.Pages.Shared
             }
         }
 
-        public FormViewMode ViewMode
-        {
-            get { return UploadFormView.DefaultMode; }
-            set { UploadFormView.DefaultMode = value; }
-        }
-        private RadioButtonList RBL { get; set; }
+
         public IEnumerable<Category> CategoryDropDownList_GetData()
         {
             return Service.GetAllCategorys();
