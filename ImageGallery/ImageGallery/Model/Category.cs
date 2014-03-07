@@ -10,7 +10,8 @@ namespace ImageGallery.Model
     {
         public int CategoryID { get; set; }
 
-        [Required(ErrorMessage = "Categorin måste ha ett värde")]
+        [Required(ErrorMessage = "Kategorin måste ha ett värde")]
+        [StringLength(35, ErrorMessage = "Kategorin får som mest innehålla 35 tecken")]
         public string Value { get; set; }
     }
 }

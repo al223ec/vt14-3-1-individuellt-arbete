@@ -50,10 +50,10 @@ namespace ImageGallery.Model.DAL
         }
 
         /// <summary>
-        /// 
+        /// Returnerar samtliga bilder från ett angivet album
         /// </summary>
-        /// <param name="albumID"></param>
-        /// <returns></returns>
+        /// <param name="albumID">AlbumetsID</param>
+        /// <returns>Picture objekt</returns>
         public IEnumerable<Picture> GetAllPicturesFromAlbum(int albumID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -73,6 +73,7 @@ namespace ImageGallery.Model.DAL
                     var nameIndex = reader.GetOrdinal("Name");
                     var dateIndex = reader.GetOrdinal("Date");
                     var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                    var extensionIndex = reader.GetOrdinal("Extension");
 
                     while (reader.Read())
                     {
@@ -81,7 +82,8 @@ namespace ImageGallery.Model.DAL
                             PictureID = reader.GetInt32(pictureIDIndex),
                             Name = reader.GetString(nameIndex),
                             Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex)
+                            CategoryID = reader.GetInt32(categoryIDIndex),
+                            Extension = reader.GetString(extensionIndex)
                         });
                     }
                 }
@@ -92,8 +94,8 @@ namespace ImageGallery.Model.DAL
         /// <summary>
         /// Hämtar en bild med hjälp av ett ID
         /// </summary>
-        /// <param name="pictureID"></param>
-        /// <returns></returns>
+        /// <param name="pictureID">Pictureidet NPK</param>
+        /// <returns>Ett picture objekt</returns>
         public Picture GetPicture(int pictureID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -111,6 +113,7 @@ namespace ImageGallery.Model.DAL
                     var nameIndex = reader.GetOrdinal("Name");
                     var dateIndex = reader.GetOrdinal("Date");
                     var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                    var extensionIndex = reader.GetOrdinal("Extension");
 
                     if (reader.Read())
                     {
@@ -119,7 +122,8 @@ namespace ImageGallery.Model.DAL
                             PictureID = reader.GetInt32(pictureIDIndex),
                             Name = reader.GetString(nameIndex),
                             Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex)
+                            CategoryID = reader.GetInt32(categoryIDIndex),
+                            Extension = reader.GetString(extensionIndex)
                         };
                     }
                 }
@@ -128,19 +132,19 @@ namespace ImageGallery.Model.DAL
         }
 
         /// <summary>
-        /// Lägga till en bild utan tillhörande album
+        /// Lägger till en bild utan tillhörande album, oklart när denna blir aktuell
         /// </summary>
-        /// <param name="picture">Picture objekt</param>
+        /// <param name="picture">Picture Objekt</param>
         public void AddPicture(Picture picture)
         {
             throw new NotImplementedException();
         }
-        
+
         /// <summary>
         /// Lägger till en ny bild till ett album,
         /// </summary>
-        /// <param name="picture"></param>
-        /// <param name="albumID"></param>
+        /// <param name="picture">Nytt Picture objekt</param>
+        /// <param name="albumID">Albummets ID</param>
         public void AddPictureToAlbum(Picture picture, int albumID)
         {
             using (SqlConnection conn = CreateConnection())
@@ -165,7 +169,7 @@ namespace ImageGallery.Model.DAL
         }
 
         /// <summary>
-        /// Lägger till en existerande bild till ett album
+        /// Lägger till en existerande bild till ett album, änvänds senare
         /// </summary>
         /// <param name="pictureID"></param>
         /// <param name="albumID"></param>

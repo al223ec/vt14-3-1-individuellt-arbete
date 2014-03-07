@@ -19,7 +19,6 @@ namespace ImageGallery.Pages.Shared
             {
                 //TODO: Hämta aktuell bild och sätt värden
                 CurrentPicture = Service.GetPicture((int)PictureID);
-
                 MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
                 ImageNameLiteral.Text = CurrentPicture.Name;
 
@@ -27,6 +26,16 @@ namespace ImageGallery.Pages.Shared
                 ImageNameLiteral.Visible = true;
 
                 NameTextBox.Text = CurrentPicture.Name;
+
+                //Snyggare lösning? 
+                for (int i = 0; i < CategoryDropDownList.Items.Count; i++)
+                {
+                    if (int.Parse(CategoryDropDownList.Items[i].Value) == CurrentPicture.CategoryID)
+                    {
+                        CategoryDropDownList.Items[i].Selected = true;
+                        break; 
+                    }
+                }
             }
         }
 
@@ -48,12 +57,18 @@ namespace ImageGallery.Pages.Shared
         public void AlbumRadioButtonList_DataBound(object sender, EventArgs e)
         {
             //TODO: sätt ett förvalt värde om värden har skickats med
-            if (AlbumID != null)
+            if (PictureID != null)
             {
-                var item = sender as RadioButtonList;
-                if (item != null)
+                var rbl = sender as RadioButtonList;
+                if (rbl != null && AlbumID != null)
                 {
-
+                    for (int i = 0; i < rbl.Items.Count; i++)
+                    {
+                        if (int.Parse(rbl.Items[i].Value) == AlbumID)
+                        {
+                            rbl.Items[i].Selected = true; 
+                        }
+                    }
                 }
             }
         }
@@ -63,9 +78,13 @@ namespace ImageGallery.Pages.Shared
             if (Page.IsValid)
             {
                 if (CurrentPicture != null)
-                { 
-                    //Uppdaterar en existerande bild
-                    throw new NotImplementedException(); 
+                {
+                    //Uppdaterar ett existerande bild objekt
+                    CurrentPicture.Name = NameTextBox.Text;
+                    CurrentPicture.CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value);
+                    CurrentPicture.Extension = ".jpg";
+
+                    Service.AddPictureToAlbum(CurrentPicture, int.Parse(AlbumRadioButtonList.SelectedValue));
                 }
                 else
                 {
@@ -82,7 +101,7 @@ namespace ImageGallery.Pages.Shared
                     {
                         Name = NameTextBox.Text,
                         CategoryID = int.Parse(CategoryDropDownList.SelectedItem.Value),
-                       Extension = ".jpg",
+                        Extension = ".jpg",
                     };
 
                     Service.AddPictureToAlbum(picture, int.Parse(AlbumRadioButtonList.SelectedValue));
