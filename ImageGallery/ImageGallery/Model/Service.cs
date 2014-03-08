@@ -31,23 +31,6 @@ namespace ImageGallery.Model
             return PictureDAL.GetPicture(pictureID);
         }
         #endregion
-        //public void AddPicture(Picture picture, int albumID) //Bör ta en array om jag ska uppdatera bilden till många album
-        //{
-        //    //Kontroller objekt och albumIDt
-
-        //    if (picture.PictureID == 0) //Ny bild
-        //    {
-
-        //    }
-        //    else
-        //    {
-        //        PictureDAL.UpdatePicture(picture);
-        //    }
-
-        //    // PictureDAL.AddPicture(picture, albumID); 
-        //    PictureDAL.AddPicture(picture);
-        //    AlbumDAL.AddAlbumAndPicture(1, 1);
-        //}
 
         public void DeletePicture(int pictureID)
         {
@@ -71,10 +54,16 @@ namespace ImageGallery.Model
             throw new NotImplementedException();
         }
 
+        public void DeleteAlbum(int albumID)
+        {
+            AlbumDAL.DeleteAlbum(albumID); 
+        }
+
         public void AddAlbum(Album album)
         {
-            throw new NotImplementedException();
+            AlbumDAL.AddAlbum(album); 
         }
+
 
         public IEnumerable<Category> GetAllCategorys() //Ge möjlighet att requesta update? 
         {
@@ -87,6 +76,11 @@ namespace ImageGallery.Model
             return allCategorys;
         }
 
+        /// <summary>
+        /// Uppdatera/lägg till bild till album, kan både ta emot en ny bild och en existerande bild
+        /// </summary>
+        /// <param name="picture">Picture som ska uppdateras</param>
+        /// <param name="albumID">Vilket album bilden ska tillhöra</param>
         public void AddPictureToAlbum(Picture picture, int albumID)
         {
             //Validera picture

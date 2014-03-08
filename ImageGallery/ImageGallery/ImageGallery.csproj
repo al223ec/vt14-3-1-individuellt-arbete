@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vs62FD.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vs11D4.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vs62FD.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vs11D4.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -65,8 +65,8 @@
     <Content Include="Pages\ImageGalleryPages\EditPicture.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListAlbums.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListPictures.aspx" />
-    <Content Include="Pages\Shared\UploadPicture.ascx" />
-    <Content Include="Pages\Shared\ViewEditAlbumPictures.ascx" />
+    <Content Include="Pages\Shared\UploadEditPicture.ascx" />
+    <Content Include="Pages\Shared\ViewDeleteAlbumPictures.ascx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -82,9 +82,10 @@
     <Compile Include="Model\DAL\CategoryDAL.cs" />
     <Compile Include="Model\DAL\DALBase.cs" />
     <Compile Include="Model\DAL\PictureDAL.cs" />
-    <Compile Include="Model\Picture.cs" />
-    <Compile Include="Model\PictureBase.cs" />
-    <Compile Include="Model\PictureExtensions.cs" />
+    <Compile Include="Model\Picture\Picture.cs" />
+    <Compile Include="Model\Picture\PictureBase.cs" />
+    <Compile Include="Model\Picture\PictureExistsInAlbumException.cs" />
+    <Compile Include="Model\Picture\PictureExtensions.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Pages\ImageGalleryPages\EditPicture.aspx.cs">
       <DependentUpon>EditPicture.aspx</DependentUpon>
@@ -117,19 +118,19 @@
     <Compile Include="Pages\Shared\SiteTemplate.Master.designer.cs">
       <DependentUpon>SiteTemplate.Master</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shared\UploadPicture.ascx.cs">
-      <DependentUpon>UploadPicture.ascx</DependentUpon>
+    <Compile Include="Pages\Shared\UploadEditPicture.ascx.cs">
+      <DependentUpon>UploadEditPicture.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Shared\UploadPicture.ascx.designer.cs">
-      <DependentUpon>UploadPicture.ascx</DependentUpon>
+    <Compile Include="Pages\Shared\UploadEditPicture.ascx.designer.cs">
+      <DependentUpon>UploadEditPicture.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Shared\ViewEditAlbumPictures.ascx.cs">
-      <DependentUpon>ViewEditAlbumPictures.ascx</DependentUpon>
+    <Compile Include="Pages\Shared\ViewDeleteAlbumPictures.ascx.cs">
+      <DependentUpon>ViewDeleteAlbumPictures.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Pages\Shared\ViewEditAlbumPictures.ascx.designer.cs">
-      <DependentUpon>ViewEditAlbumPictures.ascx</DependentUpon>
+    <Compile Include="Pages\Shared\ViewDeleteAlbumPictures.ascx.designer.cs">
+      <DependentUpon>ViewDeleteAlbumPictures.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

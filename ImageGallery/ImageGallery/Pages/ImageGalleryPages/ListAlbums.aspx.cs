@@ -14,9 +14,7 @@ namespace ImageGallery.Pages.ImageGalleryPages
         public Service Service { get { return _service ?? (_service = new Service()); } }
 
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
+        { }
 
         // The return type can be changed to IEnumerable, however to support
         // paging and sorting, the following parameters must be added:
@@ -29,17 +27,13 @@ namespace ImageGallery.Pages.ImageGalleryPages
             return Service.GetAllAlbums();
         }
 
-        public void AlbumListView_InsertItem()
+        public void AlbumListView_InsertItem(Album album)
         {
-            var item = new ImageGallery.Model.Album();
-            TryUpdateModel(item);
             if (ModelState.IsValid)
             {
-                // Save changes here
-
+                Service.AddAlbum(album);
             }
         }
-
         // The id parameter name should match the DataKeyNames value set on the control
         public void AlbumListView_UpdateItem(int id)
         {
@@ -57,6 +51,12 @@ namespace ImageGallery.Pages.ImageGalleryPages
                 // Save changes here, e.g. MyDataLayer.SaveChanges();
 
             }
+        }
+
+        // The id parameter name should match the DataKeyNames value set on the control
+        public void AlbumListView_DeleteItem(int albumID)
+        {
+            Service.DeleteAlbum(albumID);
         }
     }
 }

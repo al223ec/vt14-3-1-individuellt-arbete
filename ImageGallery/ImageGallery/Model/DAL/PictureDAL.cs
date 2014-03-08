@@ -154,7 +154,7 @@ namespace ImageGallery.Model.DAL
 
                 cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
+                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = picture.Name;
                 cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
                 cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
                 cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
@@ -214,7 +214,7 @@ namespace ImageGallery.Model.DAL
         }
 
         /// <summary>
-        /// Uppdaterar en existerande bild med hjälp av ett picture objekt, samt tilldelar ett album
+        /// Uppdaterar en existerande bild med hjälp av ett picture objekt, samt tilldelar ett album. Ska kasta ett undantag om bilden redan finns i albummet
         /// </summary>
         /// <param name="picture">Ett existerande picture objekt</param>
         public void UpdateExistingPictureToAlbum(Picture picture, int albumID)
@@ -238,6 +238,11 @@ namespace ImageGallery.Model.DAL
 
                     cmd.ExecuteNonQuery();//DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
                 }
+            }
+            else
+            {
+                //Den aktuella bilden finns redan i albumet
+                throw new PictureExistsInAlbumException();
             }
         }
 
