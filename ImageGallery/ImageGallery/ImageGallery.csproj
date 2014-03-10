@@ -86,6 +86,7 @@
     <Compile Include="Model\Picture\PictureBase.cs" />
     <Compile Include="Model\Picture\PictureExistsInAlbumException.cs" />
     <Compile Include="Model\Picture\PictureExtensions.cs" />
+    <Compile Include="Model\Picture\PictureHandler.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Pages\ImageGalleryPages\EditPicture.aspx.cs">
       <DependentUpon>EditPicture.aspx</DependentUpon>
@@ -146,6 +147,7 @@
   <ItemGroup>
     <Folder Include="App_Extensions\" />
     <Folder Include="App_GlobalResources\" />
+    <Folder Include="Content\Pictures\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,7 +11,7 @@ namespace ImageGallery.Pages.Shared
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            //TODO: Fixa med länkar, en meny samt formatering
         }
     }
 }

@@ -12,15 +12,21 @@ namespace ImageGallery.Pages.ImageGalleryPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             string imgName = Request.QueryString["name"];
             if (imgName != null)
             {
-                MainImage.ImageUrl = "~/Content/Images/Penguins.jpg";
-                MainImage.Visible = true;
-
+                //TODO: Fixa länkar
                 ImageNameLiteral.Text = imgName;
                 ImageNameLiteral.Visible = true; 
+            }
+
+            //TODO: Fixa rätt meddelanden vid uppladdning
+            if (Session["upload"] != null)
+            {
+                ////SuccessFullUploadPanel.Visible = true;
+                ////SuccessFullUploadPanel.CssClass = "success";
+                ////OutputLiteral.Text = "Bilden laddades upp";
+                Session.Remove("upload");
             }
         }
     }

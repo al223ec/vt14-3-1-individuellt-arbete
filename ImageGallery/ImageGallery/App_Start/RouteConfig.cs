@@ -12,10 +12,12 @@ namespace ImageGallery.App_Start
         {
             //routeCollection.MapPageRoute("Default",             "",                 "~/Pages/ImageGalleryPages/Default.aspx");
             routeCollection.MapPageRoute("Default",             "",                 "~/Pages/ImageGalleryPages/ListAlbums.aspx");
-            routeCollection.MapPageRoute("ViewAlbumPictures",   "album/{id}/{name}",       "~/Pages/ImageGalleryPages/ListPictures.aspx");
+            routeCollection.MapPageRoute("ViewAlbumPictures",   "album/{id}/",       "~/Pages/ImageGalleryPages/ListPictures.aspx");
+            routeCollection.MapPageRoute("ViewAlbumPicturesPictureID", "album/{id}/{pictureID}/", "~/Pages/ImageGalleryPages/ListPictures.aspx");
+
 
             routeCollection.MapPageRoute("ListPictures",        "Bilder",           "~/Pages/ImageGalleryPages/ListPictures.aspx");
-            routeCollection.MapPageRoute("EditPicture", "Redigerabild/{id}/{name}/{pictureID}", "~/Pages/ImageGalleryPages/EditPicture.aspx"); 
+            routeCollection.MapPageRoute("EditPicture", "Redigerabild/{id}/{pictureID}", "~/Pages/ImageGalleryPages/EditPicture.aspx"); 
         }
     }
 }

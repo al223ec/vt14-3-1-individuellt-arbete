@@ -7,27 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImageGallery.Pages.ImageGalleryPages {
+namespace ImageGallery.Pages.Shared {
     
     
-    public partial class ListPictures {
+    public partial class UploadPicture {
         
         /// <summary>
-        /// ImageNameLiteral control.
+        /// uploadPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ImageNameLiteral;
+        protected global::System.Web.UI.WebControls.Panel uploadPanel;
         
         /// <summary>
-        /// ViewDeleteAlbumPictures control.
+        /// MainImage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ImageGallery.Pages.Shared.ViewEditAlbumPictures ViewDeleteAlbumPictures;
+        protected global::System.Web.UI.WebControls.Image MainImage;
+        
+        /// <summary>
+        /// UploadFormView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView UploadFormView;
     }
 }

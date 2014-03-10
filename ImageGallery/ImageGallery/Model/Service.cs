@@ -1,6 +1,7 @@
 ﻿using ImageGallery.Model.DAL;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +17,9 @@ namespace ImageGallery.Model
 
         private CategoryDAL _categoryDAL;
         public CategoryDAL CategoryDAL { get { return _categoryDAL ?? (_categoryDAL = new CategoryDAL()); } }
+
+        private PictureHandler _pictureHandler;
+        public PictureHandler PictureHandler { get { return _pictureHandler ?? (_pictureHandler = new PictureHandler()); } }
 
         #region Getpictures
         public IEnumerable<Picture> GetAllPictures()
@@ -34,11 +38,23 @@ namespace ImageGallery.Model
 
         public void DeletePicture(int pictureID)
         {
+            PictureHandler.DeleteImage(PictureDAL.GetPicture(pictureID));
             PictureDAL.DeletePicture(pictureID);
         }
+        //public void UpdatePicture(Picture picture, Stream stream)
+        //{
+        //    //PictureHandler.UpdateImage(stream, picture); 
+        //    PictureDAL.UpdatePicture(picture);
+        //}
         public void UpdatePicture(Picture picture)
         {
             PictureDAL.UpdatePicture(picture);
+        }
+
+        public void UpdatePictureHandler(Picture pic, Picture oldPicture)
+        {
+            //TODO: Kan skicka med det gamla objektet också 
+            PictureHandler.UpdateExistingImage(pic, oldPicture);
         }
 
         public IEnumerable<Album> GetAllAlbums()
@@ -49,6 +65,11 @@ namespace ImageGallery.Model
         {
             throw new NotImplementedException();
         }
+        public string GetAlbumName(int albumID)
+        {
+            return AlbumDAL.GetAlbumName(albumID); 
+        }
+
         public bool AlbumExists(int albumID)
         {
             throw new NotImplementedException();
@@ -64,7 +85,10 @@ namespace ImageGallery.Model
             AlbumDAL.AddAlbum(album); 
         }
 
-
+        /// <summary>
+        /// Hämtar samtliga kategorier och chacar dessa
+        /// </summary>
+        /// <returns>Category objekt</returns>
         public IEnumerable<Category> GetAllCategorys() //Ge möjlighet att requesta update? 
         {
             var allCategorys = HttpContext.Current.Cache["Categorys"] as IEnumerable<Category>; //Cahcar denna, kommer inte uppdateras
@@ -81,15 +105,21 @@ namespace ImageGallery.Model
         /// </summary>
         /// <param name="picture">Picture som ska uppdateras</param>
         /// <param name="albumID">Vilket album bilden ska tillhöra</param>
-        public void AddPictureToAlbum(Picture picture, int albumID)
+        public void AddPictureToAlbum(Picture picture, int albumID, Stream stream = null)
         {
-            //Validera picture
+            //TODO: Validera picture
             if (picture.PictureID == 0) //Ny bild
             {
+                if (stream != null)
+                {
+                    PictureHandler.SaveImage(stream, picture);
+                }
+                //TODO: Ny bild måste skapa tumnaglar etc
                 PictureDAL.AddPictureToAlbum(picture, albumID);
             }
             else
             {
+                //TODO: Uppdatera bild etc
                 PictureDAL.UpdateExistingPictureToAlbum(picture, albumID);
             }
         }

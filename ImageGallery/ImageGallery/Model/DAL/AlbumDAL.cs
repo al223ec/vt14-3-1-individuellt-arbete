@@ -45,6 +45,27 @@ namespace ImageGallery.Model.DAL
             }
         }
         /// <summary>
+        /// Hämtar namnet på ett album, returnerar null om albummet inte finns
+        /// </summary>
+        /// <param name="albumID">Albummets NPK</param>
+        /// <returns>En string med albummets namn</returns>
+        public string GetAlbumName(int albumID)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                SqlCommand cmd = new SqlCommand("appSchema.usp_GetAlbumName", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                cmd.Parameters.Add("@AlbumName", SqlDbType.VarChar, 35).Direction = ParameterDirection.Output;
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+
+                return (string)cmd.Parameters["@AlbumName"].Value; //Det aktuella albumnamnet
+            }
+        }
+        /// <summary>
         /// Lägger till ett album med hjälp av ett Album objekt
         /// </summary>
         /// <param name="album">Ett album objekt</param>

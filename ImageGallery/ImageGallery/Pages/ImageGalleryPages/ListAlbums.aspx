@@ -13,7 +13,7 @@
             <dl>
                 <dt><%#: Item.Name %></dt>
                 <dd>
-                    <asp:HyperLink runat="server" NavigateUrl='<%# GetRouteUrl("ViewAlbumPictures", new { id = Item.AlbumID, name = Item.Name }) %>'>
+                    <asp:HyperLink runat="server" NavigateUrl='<%# GetRouteUrl("ViewAlbumPictures", new { id = Item.AlbumID }) %>'>
                             <img src="../../Content/Images/Penguins.jpg" /></asp:HyperLink>
                 </dd>
                 <dd><%#: Item.Date %></dd>
