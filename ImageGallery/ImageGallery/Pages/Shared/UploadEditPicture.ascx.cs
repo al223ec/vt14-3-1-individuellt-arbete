@@ -31,8 +31,8 @@ namespace ImageGallery.Pages.Shared
                 CurrentPicture = Service.GetPicture((int)PictureID);
                 if (CurrentPicture != null)
                 {
-                    MainImage.ImageUrl = CurrentPicture.GetImagePath;
-                    MainImage.Visible = true;
+                    //MainImage.ImageUrl = CurrentPicture.GetImagePath; //Änvänder jag bilden här kan jag inte redigera den, byta namn etx
+                    //MainImage.Visible = true;
                 }
                 ViewMode = FormViewMode.Edit;
             }

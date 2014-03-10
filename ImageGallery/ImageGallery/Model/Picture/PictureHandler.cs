@@ -58,9 +58,13 @@ namespace ImageGallery.Model
 
                 //TODO: Vart borde jag göra detta egentligen??? 
                 pic.Name = Path.GetFileNameWithoutExtension(path); //Sparar det aktuella namnet 
-                pic.Extension = Path.GetExtension(path); 
+                pic.Extension = Path.GetExtension(path);
                 newImage.Save(path);
                 CreateThumbnail(newImage, pic);
+            }
+            else
+            {
+                //TODO: Filen är inte av rätt typ
             }
         }
 
@@ -81,7 +85,17 @@ namespace ImageGallery.Model
 
         public void UpdateExistingImage(Picture pic, Picture oldPicture)
         {
+            throw new NotImplementedException(); 
+            //Skulle kunna kontrollera namnet mot databasen att det endast får finnas unika namn
             //TODO: Fixa UpdateExistingImage
+            //var s = File.Create(oldPicture.GetFullImagePath());
+            //using (var stream = File.Open(oldPicture.GetFullImagePath(), FileMode.Open))
+            //{
+            //    SaveImage(stream, pic);
+            //}
+
+            //DeleteImage(oldPicture);
+            //TODO: Fixa UpdateExistingImage File.Exists            if (File.Exists(pic.GetFullImagePath())
             //File.Move(oldPicture.GetFullImagePath(), pic.GetFullImagePath());
             //File.Move(oldPicture.GetFullThumbnailPath(), pic.GetFullThumbnailPath());
         }
