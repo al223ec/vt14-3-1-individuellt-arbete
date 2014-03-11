@@ -109,7 +109,6 @@ namespace ImageGallery.Model.DAL
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    var pictureIDIndex = reader.GetOrdinal("PictureID");
                     var nameIndex = reader.GetOrdinal("Name");
                     var dateIndex = reader.GetOrdinal("Date");
                     var categoryIDIndex = reader.GetOrdinal("CategoryID");
@@ -119,7 +118,7 @@ namespace ImageGallery.Model.DAL
                     {
                         return new Picture
                         {
-                            PictureID = reader.GetInt32(pictureIDIndex),
+                            PictureID = pictureID,
                             Name = reader.GetString(nameIndex),
                             Date = reader.GetDateTime(dateIndex),
                             CategoryID = reader.GetInt32(categoryIDIndex),

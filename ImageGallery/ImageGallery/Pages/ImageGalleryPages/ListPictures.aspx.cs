@@ -12,20 +12,12 @@ namespace ImageGallery.Pages.ImageGalleryPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string imgName = Request.QueryString["name"];
-            if (imgName != null)
-            {
-                //TODO: Fixa länkar
-                ImageNameLiteral.Text = imgName;
-                ImageNameLiteral.Visible = true; 
-            }
-
             //TODO: Fixa rätt meddelanden vid uppladdning
             if (Session["upload"] != null)
             {
-                ////SuccessFullUploadPanel.Visible = true;
-                ////SuccessFullUploadPanel.CssClass = "success";
-                ////OutputLiteral.Text = "Bilden laddades upp";
+                OutputPanel.Visible = true;
+                HeaderOutputLiteral.Text = "Posten postades";
+                OutputLiteral.Text = Session["upload"].ToString();
                 Session.Remove("upload");
             }
         }

@@ -13,13 +13,40 @@ namespace ImageGallery.Pages.ImageGalleryPages {
     public partial class ListPictures {
         
         /// <summary>
-        /// ImageNameLiteral control.
+        /// OutputPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ImageNameLiteral;
+        protected global::System.Web.UI.WebControls.Panel OutputPanel;
+        
+        /// <summary>
+        /// HeaderOutputLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal HeaderOutputLiteral;
+        
+        /// <summary>
+        /// OutputLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal OutputLiteral;
+        
+        /// <summary>
+        /// Button control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button;
         
         /// <summary>
         /// ViewDeleteAlbumPictures control.

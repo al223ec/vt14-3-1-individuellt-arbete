@@ -1,6 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ViewDeleteAlbumPictures.ascx.cs" Inherits="ImageGallery.Pages.Shared.ViewEditAlbumPictures" %>
 
 <%@ Register Src="~/Pages/Shared/UploadEditPicture.ascx" TagPrefix="uc1" TagName="UploadEditPicture" %>
+<h2>
+    <asp:Literal ID="ImageNameLiteral" runat="server"></asp:Literal></h2>
+
 <asp:Image ID="MainImage" runat="server" Visible="false" />
 <h2>
     <asp:Literal ID="AlbumNameLiteral" runat="server"></asp:Literal></h2>

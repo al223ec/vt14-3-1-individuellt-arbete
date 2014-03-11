@@ -31,16 +31,16 @@ namespace ImageGallery.Pages.Shared
                 CurrentPicture = Service.GetPicture((int)PictureID);
                 if (CurrentPicture != null)
                 {
-                    //MainImage.ImageUrl = CurrentPicture.GetImagePath; //Änvänder jag bilden här kan jag inte redigera den, byta namn etx
-                    //MainImage.Visible = true;
+                    MainImage.ImageUrl = CurrentPicture.GetImagePath; //Änvänder jag bilden här kan jag inte redigera den, byta namn e
+                    MainImage.Visible = true;
                 }
                 ViewMode = FormViewMode.Edit;
+                titleLiteral.Text = "Redigera Bild"; 
             }
         }
 
         public IEnumerable<Category> CategoryDropDownList_GetData() { return Service.GetAllCategorys(); }
         public IEnumerable<Album> AlbumRadioButtonList_GetData() { return Service.GetAllAlbums(); }
-
 
         /// <summary>
         /// Binder data till album Radio button listan
@@ -61,7 +61,6 @@ namespace ImageGallery.Pages.Shared
                     }
                 }
             }
-
         }
 
         // The id parameter should match the DataKeyNames value set on the control
@@ -99,15 +98,9 @@ namespace ImageGallery.Pages.Shared
                             //Användaren har uppdaterat bildens tillhörande album. 
                             Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue));
                         }
-
-                        Service.UpdatePictureHandler(picture, oldPicture);
                         //TODO: Ornda med successmeddelanden 
+                        Session["upload"] = "Uppdateringen lyckades"; 
                         Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
-                        //}
-                        //else
-                        //{
-                        //    Page.ModelState.AddModelError("", String.Format("Du måsta välja en bild att ladda upp!!!"));
-                        //}
                     }
                     else
                     {
@@ -129,6 +122,7 @@ namespace ImageGallery.Pages.Shared
                 {
                     Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue), FUL.PostedFile.InputStream);
                     //TODO:Ornda med successmeddelanden 
+                    Session["upload"] = "Uppladdningen lyckades!"; 
                     Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
                 }
                 else
@@ -151,7 +145,7 @@ namespace ImageGallery.Pages.Shared
                 FUL = fileUpload;
                 if (ViewMode == FormViewMode.Edit)
                 {
-                    FUL.Visible = false; //TODO: Tar bort möjlighet att uppdatera bilden
+                    FUL.Visible = false;
                 }
             }
         }

@@ -31,6 +31,15 @@ namespace ImageGallery.Pages.Shared {
         protected global::System.Web.UI.WebControls.Image MainImage;
         
         /// <summary>
+        /// titleLiteral control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal titleLiteral;
+        
+        /// <summary>
         /// UploadFormView control.
         /// </summary>
         /// <remarks>

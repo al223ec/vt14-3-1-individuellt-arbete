@@ -2,11 +2,18 @@
 
 <%@ Register Src="~/Pages/Shared/ViewDeleteAlbumPictures.ascx" TagPrefix="uc" TagName="ViewDeleteAlbumPictures" %>
 
-
 <asp:Content ContentPlaceHolderID="ContentPlaceHolder" runat="server">
-    <h2>
-    <asp:Literal ID="ImageNameLiteral" runat="server"></asp:Literal></h2>
 
+    <asp:Panel ID="OutputPanel" runat="server" Visible="false" CssClass="success">
+        <h4>
+            <asp:Literal ID="HeaderOutputLiteral" runat="server" /></h4>
+        <p>
+            <asp:Literal ID="OutputLiteral" runat="server" />
+        </p>
+        <p>
+            <asp:Button ID="Button" runat="server" Text="Stäng" CausesValidation="false" />
+        </p>
+    </asp:Panel>
 
     <uc:ViewDeleteAlbumPictures runat="server" ID="ViewDeleteAlbumPictures" AlbumID="<%$ RouteValue:id %>" />
 </asp:Content>

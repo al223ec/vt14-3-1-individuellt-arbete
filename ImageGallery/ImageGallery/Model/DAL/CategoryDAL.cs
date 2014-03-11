@@ -9,7 +9,7 @@ namespace ImageGallery.Model.DAL
 {
     public class CategoryDAL : DALBase
     {
-        public IEnumerable<Category> GetAllCategorys(bool update = false)
+        public IEnumerable<Category> GetAllCategorys()
         {
             using (var conn = CreateConnection())
             {
@@ -37,5 +37,45 @@ namespace ImageGallery.Model.DAL
                 return categorys;
             }
         }
+
+        public IEnumerable<Picture> GetAllPicturesInCategory(int CategoryID)
+        {
+            using (var conn = CreateConnection())
+            {
+
+                var pictures = new List<Picture>(100);
+                SqlCommand cmd = new SqlCommand("AppSchema.usp_GetAllPicturesFromCategory", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = CategoryID;
+
+                conn.Open();
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    var pictureIDIndex = reader.GetOrdinal("PictureID");
+                    var nameIndex = reader.GetOrdinal("Name");
+                    var dateIndex = reader.GetOrdinal("Date");
+                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                    var extensionIndex = reader.GetOrdinal("Extension");
+
+                    while (reader.Read())
+                    {
+                        pictures.Add(new Picture
+                        {
+                            PictureID = reader.GetInt32(pictureIDIndex),
+                            Name = reader.GetString(nameIndex),
+                            Date = reader.GetDateTime(dateIndex),
+                            CategoryID = reader.GetInt32(categoryIDIndex),
+                            Extension = reader.GetString(extensionIndex)
+                        });
+                    }
+                }
+                return pictures;
+
+            }
+        }
+
+
     }
 }

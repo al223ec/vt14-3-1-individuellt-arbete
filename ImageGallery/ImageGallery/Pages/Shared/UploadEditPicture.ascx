@@ -3,7 +3,7 @@
 <%-- Används i edit image --%>
 <asp:Panel ID="uploadPanel" runat="server">
     <asp:Image ID="MainImage" runat="server" Visible="false" />
-    <h2>Ladda upp bild</h2>
+    <h2><asp:Literal runat="server" ID="titleLiteral" Text="Ladda upp bild"></asp:Literal></h2>
     <%-- UploadPanel --%>
     <asp:FormView ID="UploadFormView" runat="server" ItemType="ImageGallery.Model.Picture"
         SelectMethod="UploadFormView_GetItem"
@@ -36,7 +36,7 @@
                     OnDataBound="AlbumRadioButtonList_DataBound" />
             </p>
             <asp:LinkButton runat="server" Text="Uppdatera bild" CommandName="Update" />
-            <asp:HyperLink runat="server" Text="Avbryt" NavigateUrl='<%# GetRouteUrl("ViewAlbumPictures", new { id = AlbumID, name = AlbumName })%>' />
+            <asp:HyperLink runat="server" Text="Avbryt" NavigateUrl='<%# GetRouteUrl("ViewAlbumPictures", new { id = AlbumID})%>' />
         </EditItemTemplate>
         <InsertItemTemplate>
             <asp:FileUpload ID="ImageFileUpload" runat="server" OnDataBinding="ImageFileUpload_DataBinding" />

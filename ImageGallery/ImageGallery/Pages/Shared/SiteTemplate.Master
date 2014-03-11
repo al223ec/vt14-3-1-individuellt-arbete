@@ -14,17 +14,20 @@
         <div>
             <p class="heading">3-1 - Individuellt arbete</p>
             <h1>Bildgalleriet </h1>
-
-            <ul>
-                <li id="Li1" runat="server">
-                    <asp:HyperLink ID="HomeHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Album</asp:HyperLink></li>
-                <%--    <li runat="server">
-        <asp:HyperLink ID="CreateHyperLink" runat="server" NavigateUrl='<%$ RouteUrl:routename=CustomerCreate %>'>Ny kund</asp:HyperLink></li>--%>
-            </ul>
+            <nav>
+                <ul>
+                    <li id="Li1" runat="server">
+                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Album</asp:HyperLink></li>
+   <%--                 <li runat="server">
+                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=Categories %>'>Kategorier</asp:HyperLink></li>
+                    <li runat="server">
+                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=NewPicture %>'>Ny bild</asp:HyperLink></li>--%>
+                </ul>
+            </nav>
 
             <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
             </asp:ContentPlaceHolder>
-            
+
             <asp:ValidationSummary ID="ValidationSummary" CssClass="error" runat="server" />
             <p class="footer">
                 Anton Ledström

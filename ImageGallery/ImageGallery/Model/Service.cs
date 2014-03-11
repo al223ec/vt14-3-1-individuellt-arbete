@@ -51,11 +51,11 @@ namespace ImageGallery.Model
             PictureDAL.UpdatePicture(picture);
         }
 
-        public void UpdatePictureHandler(Picture pic, Picture oldPicture)
-        {
-            //TODO: Kan skicka med det gamla objektet också 
-            PictureHandler.UpdateExistingImage(pic, oldPicture);
-        }
+        ////public void UpdatePictureHandler(Picture pic, Picture oldPicture)
+        ////{
+        ////    //TODO: Kan skicka med det gamla objektet också 
+        ////    PictureHandler.UpdateExistingImage(pic, oldPicture);
+        ////}
 
         public IEnumerable<Album> GetAllAlbums()
         {
@@ -67,7 +67,7 @@ namespace ImageGallery.Model
         }
         public string GetAlbumName(int albumID)
         {
-            return AlbumDAL.GetAlbumName(albumID); 
+            return AlbumDAL.GetAlbumName(albumID);
         }
 
         public bool AlbumExists(int albumID)
@@ -77,12 +77,12 @@ namespace ImageGallery.Model
 
         public void DeleteAlbum(int albumID)
         {
-            AlbumDAL.DeleteAlbum(albumID); 
+            AlbumDAL.DeleteAlbum(albumID);
         }
 
         public void AddAlbum(Album album)
         {
-            AlbumDAL.AddAlbum(album); 
+            AlbumDAL.AddAlbum(album);
         }
 
         /// <summary>
@@ -110,16 +110,20 @@ namespace ImageGallery.Model
             //TODO: Validera picture
             if (picture.PictureID == 0) //Ny bild
             {
-                if (stream != null)
+                if (PictureHandler.StreamIsValid(stream)) //Ny bild streamen kan egentligen inte vara null
                 {
-                    PictureHandler.SaveImage(stream, picture);
+
+                    PictureDAL.AddPictureToAlbum(picture, albumID);
+                    PictureHandler.SaveImage(picture, stream); //Sparar filen, allt har gått väl
                 }
-                //TODO: Ny bild måste skapa tumnaglar etc
-                PictureDAL.AddPictureToAlbum(picture, albumID);
+                else
+                {
+                    //TODO: Streamen är null, det bör den inte vara
+                }
             }
             else
             {
-                //TODO: Uppdatera bild etc
+                //TODO: Uppdatera bild etc, som det är skrivet nu kan man inte uppdatera själva filen, användaren får ladda upp en ny bild istället
                 PictureDAL.UpdateExistingPictureToAlbum(picture, albumID);
             }
         }

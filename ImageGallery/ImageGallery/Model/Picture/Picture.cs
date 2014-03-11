@@ -8,11 +8,11 @@ namespace ImageGallery.Model
 {
     public class Picture : PictureBase, ICloneable
     {
-        public int PictureID { get; set; }
+        public override int PictureID { get; set; }
 
         [Required(ErrorMessage = "Bilden måste ha ett namn")]
         [StringLength(35, ErrorMessage = "Bildnamnet kan som mest bestå av 35 tecken.")]
-        public override string Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public int CategoryID { get; set; }
