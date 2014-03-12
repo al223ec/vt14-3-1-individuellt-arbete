@@ -24,7 +24,7 @@ namespace ImageGallery.Model
 
         public static string GetFullImagePath(this Picture picture)
         {
-            return Path.Combine(PhysicalUploadedImagesPath, string.Format("{0}{1}", picture.PictureID, picture.Extension));
+            return Path.Combine(PhysicalUploadedImagesPath, string.Format("{0}{1}", picture.PictureFileName, picture.Extension));
         }
     }
 }

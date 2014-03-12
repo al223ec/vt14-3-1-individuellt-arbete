@@ -12,14 +12,22 @@ namespace ImageGallery.Pages.ImageGalleryPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //TODO: Fixa rätt meddelanden vid uppladdning
-            if (Session["upload"] != null)
+            if (Session["successfull"] != null)
             {
                 OutputPanel.Visible = true;
-                HeaderOutputLiteral.Text = "Posten postades";
-                OutputLiteral.Text = Session["upload"].ToString();
-                Session.Remove("upload");
+                HeaderOutputLiteral.Text = "Successfull";
+                OutputLiteral.Text = Session["successfull"].ToString();
+                Session.Remove("successfull");
             }
+
+            ////TODO: Behövs denna, kan använda modelstateerror
+            //if (Session["error"] != null)
+            //{
+            //    OutputPanel.Visible = true;
+            //    HeaderOutputLiteral.Text = "Något misslyckades";
+            //    OutputLiteral.Text = Session["error"].ToString();
+            //    Session.Remove("error");
+            //}
         }
     }
 }

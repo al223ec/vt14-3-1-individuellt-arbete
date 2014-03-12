@@ -18,34 +18,44 @@ namespace ImageGallery.Model.DAL
             // Skapar och initierar ett anslutningsobjekt.
             using (var conn = CreateConnection())
             {
-                var pictures = new List<Picture>(100);
-                var cmd = new SqlCommand("AppSchema.usp_GetAllPictures", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var pictureIDIndex = reader.GetOrdinal("PictureID");
-                    var nameIndex = reader.GetOrdinal("Name");
-                    var dateIndex = reader.GetOrdinal("Date");
-                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                    var extensionIndex = reader.GetOrdinal("Extension");
+                    var pictures = new List<Picture>(100);
+                    var cmd = new SqlCommand("AppSchema.usp_GetAllPictures", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    while (reader.Read())
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        pictures.Add(new Picture
+                        var pictureIDIndex = reader.GetOrdinal("PictureID");
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+                        var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                        var extensionIndex = reader.GetOrdinal("Extension");
+                        var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
+
+                        while (reader.Read())
                         {
-                            PictureID = reader.GetInt32(pictureIDIndex),
-                            Name = reader.GetString(nameIndex),
-                            Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex),
-                            Extension = reader.GetString(extensionIndex),
-                        });
+                            pictures.Add(new Picture
+                            {
+                                PictureID = reader.GetInt32(pictureIDIndex),
+                                Name = reader.GetString(nameIndex),
+                                Date = reader.GetDateTime(dateIndex),
+                                CategoryID = reader.GetInt32(categoryIDIndex),
+                                Extension = reader.GetString(extensionIndex),
+                                PictureFileName = reader.GetString(fileNameIndex)
+                            });
+                        }
                     }
+                    pictures.TrimExcess();
+                    return pictures;
                 }
-                pictures.TrimExcess();
-                return pictures;
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
 
@@ -58,36 +68,45 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-
-                var pictures = new List<Picture>(100);
-                SqlCommand cmd = new SqlCommand("AppSchema.usp_GetAllPicturesFromAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var pictureIDIndex = reader.GetOrdinal("PictureID");
-                    var nameIndex = reader.GetOrdinal("Name");
-                    var dateIndex = reader.GetOrdinal("Date");
-                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                    var extensionIndex = reader.GetOrdinal("Extension");
+                    var pictures = new List<Picture>(100);
+                    SqlCommand cmd = new SqlCommand("AppSchema.usp_GetAllPicturesFromAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    while (reader.Read())
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        pictures.Add(new Picture
+                        var pictureIDIndex = reader.GetOrdinal("PictureID");
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+                        var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                        var extensionIndex = reader.GetOrdinal("Extension");
+                        var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
+
+                        while (reader.Read())
                         {
-                            PictureID = reader.GetInt32(pictureIDIndex),
-                            Name = reader.GetString(nameIndex),
-                            Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex),
-                            Extension = reader.GetString(extensionIndex)
-                        });
+                            pictures.Add(new Picture
+                            {
+                                PictureID = reader.GetInt32(pictureIDIndex),
+                                Name = reader.GetString(nameIndex),
+                                Date = reader.GetDateTime(dateIndex),
+                                CategoryID = reader.GetInt32(categoryIDIndex),
+                                Extension = reader.GetString(extensionIndex),
+                                PictureFileName = reader.GetString(fileNameIndex)
+                            });
+                        }
                     }
+                    return pictures;
                 }
-                return pictures;
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
 
@@ -100,34 +119,44 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("AppSchema.usp_GetPicture", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var nameIndex = reader.GetOrdinal("Name");
-                    var dateIndex = reader.GetOrdinal("Date");
-                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                    var extensionIndex = reader.GetOrdinal("Extension");
+                    SqlCommand cmd = new SqlCommand("AppSchema.usp_GetPicture", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    if (reader.Read())
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return new Picture
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+                        var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                        var extensionIndex = reader.GetOrdinal("Extension");
+                        var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
+
+                        if (reader.Read())
                         {
-                            PictureID = pictureID,
-                            Name = reader.GetString(nameIndex),
-                            Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex),
-                            Extension = reader.GetString(extensionIndex)
-                        };
+                            return new Picture
+                            {
+                                PictureID = pictureID,
+                                Name = reader.GetString(nameIndex),
+                                Date = reader.GetDateTime(dateIndex),
+                                CategoryID = reader.GetInt32(categoryIDIndex),
+                                Extension = reader.GetString(extensionIndex),
+                                PictureFileName = reader.GetString(fileNameIndex)
+                            };
+                        }
                     }
+                    return null;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
                 }
             }
-            return null;
         }
 
         /// <summary>
@@ -148,22 +177,31 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_AddPictureToAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_AddPictureToAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = picture.Name;
-                cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
-                cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = picture.Name;
+                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
+                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
+                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
 
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
-                conn.Open();
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    conn.Open();
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                picture.PictureID = (int)cmd.Parameters["@PictureID"].Value; //Den nya pictureID:et
+                    picture.PictureID = (int)cmd.Parameters["@PictureID"].Value; //Den nya pictureID:et
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
 
@@ -176,17 +214,25 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_AddExistingPictureToAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_AddExistingPictureToAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
 
-                conn.Open();
+                    conn.Open();
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -197,18 +243,27 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_UpdatePicture", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdatePicture", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
-                cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
-                cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
+                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
+                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
+                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
 
-                conn.Open();
+                    conn.Open();
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
 
@@ -222,20 +277,29 @@ namespace ImageGallery.Model.DAL
             {
                 using (SqlConnection conn = CreateConnection())
                 {
-                    //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
-                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateExistingPictureToAlbum", conn); //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    try
+                    {
+                        //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                        SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateExistingPictureToAlbum", conn); //DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
-                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
-                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
-                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                        cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = picture.PictureID;
+                        cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
+                        cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
+                        cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
+                        cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
+                        cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
 
-                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
-                    conn.Open();
+                        cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                        conn.Open();
 
-                    cmd.ExecuteNonQuery();//DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                        cmd.ExecuteNonQuery();//DENNA KASTAR UNDANTAG OM BILDEN REDAN FINNS I ALBUMMET!!!!
+                    }
+                    catch (Exception)
+                    {
+                        
+                        throw;
+                    }
                 }
             }
             else
@@ -249,18 +313,25 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_PictureExistsInAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_PictureExistsInAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@Exists", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@Exists", SqlDbType.Bit).Direction = ParameterDirection.Output;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
-                conn.Open();
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    conn.Open();
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
 
-                return (bool)cmd.Parameters["@Exists"].Value; //True om bilden redan finns i albummet pictureID:et
+                    return (bool)cmd.Parameters["@Exists"].Value; //True om bilden redan finns i albummet pictureID:et
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 
@@ -273,13 +344,21 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_DeletePicture", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeletePicture", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
+                    cmd.Parameters.Add("@PictureID", SqlDbType.Int, 4).Value = pictureID;
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
 

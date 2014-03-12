@@ -18,30 +18,38 @@ namespace ImageGallery.Model.DAL
             // Skapar och initierar ett anslutningsobjekt.
             using (var conn = CreateConnection())
             {
-                var albums = new List<Album>(100);
-                var cmd = new SqlCommand("AppSchema.usp_GetAllAlbums", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var albumIDIndex = reader.GetOrdinal("AlbumID");
-                    var nameIndex = reader.GetOrdinal("Name");
-                    var dateIndex = reader.GetOrdinal("Date");
+                    var albums = new List<Album>(100);
+                    var cmd = new SqlCommand("AppSchema.usp_GetAllAlbums", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    while (reader.Read())
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        albums.Add(new Album
+                        var albumIDIndex = reader.GetOrdinal("AlbumID");
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+
+                        while (reader.Read())
                         {
-                            AlbumID = reader.GetInt32(albumIDIndex),
-                            Name = reader.GetString(nameIndex),
-                            Date = reader.GetDateTime(dateIndex),
-                        });
+                            albums.Add(new Album
+                            {
+                                AlbumID = reader.GetInt32(albumIDIndex),
+                                Name = reader.GetString(nameIndex),
+                                Date = reader.GetDateTime(dateIndex),
+                            });
+                        }
                     }
+                    albums.TrimExcess();
+                    return albums;
                 }
-                albums.TrimExcess();
-                return albums;
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -53,16 +61,24 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_GetAlbumName", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_GetAlbumName", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
-                cmd.Parameters.Add("@AlbumName", SqlDbType.VarChar, 35).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    cmd.Parameters.Add("@AlbumName", SqlDbType.VarChar, 35).Direction = ParameterDirection.Output;
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
 
-                return (string)cmd.Parameters["@AlbumName"].Value; //Det aktuella albumnamnet
+                    return (string)cmd.Parameters["@AlbumName"].Value; //Det aktuella albumnamnet
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -73,16 +89,24 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_AddAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_AddAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = album.Name;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = album.Name;
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
 
-                album.AlbumID = (int)cmd.Parameters["@AlbumID"].Value; //Den nya pictureID:et
+                    album.AlbumID = (int)cmd.Parameters["@AlbumID"].Value; //Den nya pictureID:et
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -91,17 +115,25 @@ namespace ImageGallery.Model.DAL
         /// <param name="albumID">Albumets NPK</param>
         public void DeleteAlbum(int albumID)
         {
-            //KASTAR UNDANTAG OM DET FINNS BILDER SOM TILLHÖR ALBUMM OMG!!!!!!!"ÖÖ
+            //KASTAR UNDANTAG OM DET FINNS BILDER SOM TILLHÖR ALBUMM OMG!!!!!!!"
             //Kanske fixa en stored procedure eller?? 
+            //TODO: Fixa ta bort album med tillhörande bilder.
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
         /// <summary>
@@ -112,15 +144,64 @@ namespace ImageGallery.Model.DAL
         {
             using (SqlConnection conn = CreateConnection())
             {
-                SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateAlbum", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_UpdateAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = album.AlbumID;
-                cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = album.Name;
-                cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = album.Date;
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = album.AlbumID;
+                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = album.Name;
+                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = album.Date;
 
-                conn.Open();
-                cmd.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+        /// <summary>
+        /// Hämtar ett album från databasen utifrån dess ID, kastar undantag om albummet inte finns
+        /// </summary>
+        /// <param name="albumID">AlbumIdet</param>
+        /// <returns></returns>
+        public Album GetAlbum(int albumID)
+        {
+            // Skapar och initierar ett anslutningsobjekt.
+            using (var conn = CreateConnection())
+            {
+                try
+                {
+                    var cmd = new SqlCommand("AppSchema.usp_GetAlbum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+
+                        if (reader.Read())
+                        {
+                            return new Album
+                           {
+                               AlbumID = albumID,
+                               Name = reader.GetString(nameIndex),
+                               Date = reader.GetDateTime(dateIndex),
+                           };
+                        }
+                    }
+                    return null;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
     }

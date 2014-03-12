@@ -13,28 +13,35 @@ namespace ImageGallery.Model.DAL
         {
             using (var conn = CreateConnection())
             {
-                var categorys = new List<Category>(100);
-                var cmd = new SqlCommand("AppSchema.usp_GetAllCategorys", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                    var valueIndex = reader.GetOrdinal("Value");
-               
-                    while (reader.Read())
+                    var categorys = new List<Category>(100);
+                    var cmd = new SqlCommand("AppSchema.usp_GetAllCategorys", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        categorys.Add(new Category
+                        var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                        var valueIndex = reader.GetOrdinal("Value");
+
+                        while (reader.Read())
                         {
-                            CategoryID = reader.GetInt32(categoryIDIndex),
-                            Value = reader.GetString(valueIndex),
-                        });
+                            categorys.Add(new Category
+                            {
+                                CategoryID = reader.GetInt32(categoryIDIndex),
+                                Value = reader.GetString(valueIndex),
+                            });
+                        }
                     }
+                    categorys.TrimExcess();
+                    return categorys;
                 }
-                categorys.TrimExcess();
-                return categorys;
+                catch (Exception)
+                {
+                    throw;
+                }
             }
         }
 
@@ -42,40 +49,44 @@ namespace ImageGallery.Model.DAL
         {
             using (var conn = CreateConnection())
             {
-
-                var pictures = new List<Picture>(100);
-                SqlCommand cmd = new SqlCommand("AppSchema.usp_GetAllPicturesFromCategory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = CategoryID;
-
-                conn.Open();
-
-                using (var reader = cmd.ExecuteReader())
+                try
                 {
-                    var pictureIDIndex = reader.GetOrdinal("PictureID");
-                    var nameIndex = reader.GetOrdinal("Name");
-                    var dateIndex = reader.GetOrdinal("Date");
-                    var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                    var extensionIndex = reader.GetOrdinal("Extension");
+                    var pictures = new List<Picture>(100);
+                    SqlCommand cmd = new SqlCommand("AppSchema.usp_GetAllPicturesFromCategory", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    while (reader.Read())
+                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = CategoryID;
+
+                    conn.Open();
+
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        pictures.Add(new Picture
-                        {
-                            PictureID = reader.GetInt32(pictureIDIndex),
-                            Name = reader.GetString(nameIndex),
-                            Date = reader.GetDateTime(dateIndex),
-                            CategoryID = reader.GetInt32(categoryIDIndex),
-                            Extension = reader.GetString(extensionIndex)
-                        });
-                    }
-                }
-                return pictures;
+                        var pictureIDIndex = reader.GetOrdinal("PictureID");
+                        var nameIndex = reader.GetOrdinal("Name");
+                        var dateIndex = reader.GetOrdinal("Date");
+                        var categoryIDIndex = reader.GetOrdinal("CategoryID");
+                        var extensionIndex = reader.GetOrdinal("Extension");
 
+                        while (reader.Read())
+                        {
+                            pictures.Add(new Picture
+                            {
+                                PictureID = reader.GetInt32(pictureIDIndex),
+                                Name = reader.GetString(nameIndex),
+                                Date = reader.GetDateTime(dateIndex),
+                                CategoryID = reader.GetInt32(categoryIDIndex),
+                                Extension = reader.GetString(extensionIndex)
+                            });
+                        }
+                    }
+                    return pictures;
+                }
+                catch (Exception)
+                {
+                    
+                    throw;
+                }
             }
         }
-
-
     }
 }

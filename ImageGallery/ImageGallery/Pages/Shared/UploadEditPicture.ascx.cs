@@ -1,6 +1,7 @@
 ﻿using ImageGallery.Model;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.ModelBinding;
@@ -35,7 +36,7 @@ namespace ImageGallery.Pages.Shared
                     MainImage.Visible = true;
                 }
                 ViewMode = FormViewMode.Edit;
-                titleLiteral.Text = "Redigera Bild"; 
+                titleLiteral.Text = "Redigera Bild";
             }
         }
 
@@ -82,13 +83,10 @@ namespace ImageGallery.Pages.Shared
                     Page.ModelState.AddModelError("", String.Format("Item with id {0} was not found", pictureID));
                     return;
                 }
-                var oldPicture = picture.Clone() as Picture;
                 if (Page.TryUpdateModel(picture))
                 {
                     if (AlbumID != null)
                     {
-                        //if (FUL.PostedFile.ContentLength != 0)
-                        //{
                         if (AlbumID == int.Parse(RBL.SelectedValue)) //Nytt album inte satt
                         {
                             Service.UpdatePicture(picture);
@@ -98,8 +96,7 @@ namespace ImageGallery.Pages.Shared
                             //Användaren har uppdaterat bildens tillhörande album. 
                             Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue));
                         }
-                        //TODO: Ornda med successmeddelanden 
-                        Session["upload"] = "Uppdateringen lyckades"; 
+                        Session["successfull"] = "Uppdateringen lyckades";
                         Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
                     }
                     else
@@ -114,21 +111,25 @@ namespace ImageGallery.Pages.Shared
             }
         }
 
-        public void UploadFormView_InsertItem(Picture picture)
+        public void UploadFormView_InsertItem()
         {
-            if (Page.ModelState.IsValid)
+            if (FUL.PostedFile.ContentLength != 0)
             {
-                if (FUL.PostedFile.ContentLength != 0)
+                var picture = new Picture();
+                picture.Extension = Path.GetExtension(FUL.FileName);
+
+                Page.TryUpdateModel(picture);
+                if (Page.ModelState.IsValid)
                 {
+                    //TODO: Klickar man två ggr på ladda upp väldigt snabbt blir det två poster
                     Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue), FUL.PostedFile.InputStream);
-                    //TODO:Ornda med successmeddelanden 
-                    Session["upload"] = "Uppladdningen lyckades!"; 
+                    Session["successfull"] = "Uppladdningen lyckades!";
                     Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
                 }
-                else
-                {
-                    Page.ModelState.AddModelError("", String.Format("Du måsta välja en bild att ladda upp!!!"));
-                }
+            }
+            else
+            {
+                Page.ModelState.AddModelError("", String.Format("Du måsta välja en bild att ladda upp!!!"));
             }
         }
 

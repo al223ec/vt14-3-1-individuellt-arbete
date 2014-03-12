@@ -25,7 +25,7 @@ namespace ImageGallery.Model
             }
         }
 
-        public void SaveImage(Picture pic, Stream stream)
+        public void SavePictureToFile(Picture pic, Stream stream)
         {
             if (stream == null)
             {
@@ -46,19 +46,13 @@ namespace ImageGallery.Model
 
         }
 
-        public void DeleteImage(Picture pic)
+        public void DeletePictureFile(Picture pic)
         {
             //TODO:Fixa try catch samt testa, funkar inte om bilden tillhör flera album, får processen är upptagen!
-            //if (File.Exists(pic.GetFullImagePath()))
-            //{
+            //Föredrar egent att ha alla try catcher i service classen
             File.Delete(pic.GetFullImagePath());
-            ////}
-            ////if (File.Exists(pic.GetFullThumbnailPath()))
-            ////{
             File.Delete(pic.GetFullThumbnailPath());
-            //}
         }
-
         public bool StreamIsValid(Stream stream)
         {
             using (var newImage = Image.FromStream(stream)) //Kastas ett undatag om filen som laddas upp inte är en bild
@@ -66,59 +60,5 @@ namespace ImageGallery.Model
                 return IsValidImage(newImage);
             }
         }
-
-        //public void CreateThumbNails(IEnumerable<Picture> picturesInGallery)
-        //{
-        //    foreach (var picture in picturesInGallery)
-        //    {
-        //        if (!File.Exists(picture.GetFullThumbnailPath()))
-        //        {
-        //            if (File.Exists(picture.GetFullImagePath())) //Kontrollerar att filen finns innan den används
-        //            {
-        //                var thumbnail = System.Drawing.Image.FromFile(picture.GetFullImagePath()).GetThumbnailImage(120, 90, null, System.IntPtr.Zero);
-        //                thumbnail.Save(picture.GetFullThumbnailPath());
-        //            }
-        //        }
-        //    }
-        //}
-        //var path = pic.GetFullImagePath();
-        //var numOfExistingImages = 1;
-
-        //while (File.Exists(path))
-        //{
-        //    path = Path.Combine(pic.GetPath(), string.Format("{0}{1}{2}", pic.Name, string.Format("({0})", numOfExistingImages), pic.Extension));
-        //    numOfExistingImages++;
-        //}
-
-        //pic.Name = Path.GetFileNameWithoutExtension(path); //Sparar det aktuella namnet 
-        //pic.Extension = Path.GetExtension(path);
-        ////public void UpdateImage(Stream stream, Picture pic)
-        ////{
-        ////    var newImage = Image.FromStream(stream); //Kastas ett undatag om filen som laddas upp inte är en bild
-
-        ////    if (IsValidImage(newImage))
-        ////    {
-        ////        var path = pic.GetFullImagePath();
-
-        ////        pic.Extension = Path.GetExtension(path);
-        ////        newImage.Save(path);
-        ////        CreateThumbnail(newImage, pic);
-        ////    }
-        ////}
-        //public void UpdateExistingImage(Picture pic, Picture oldPicture)
-        //{
-        //    throw new NotImplementedException(); 
-        //    //Skulle kunna kontrollera namnet mot databasen att det endast får finnas unika namn
-        //    //var s = File.Create(oldPicture.GetFullImagePath());
-        //    //using (var stream = File.Open(oldPicture.GetFullImagePath(), FileMode.Open))
-        //    //{
-        //    //    SaveImage(stream, pic);
-        //    //}
-
-        //    //DeleteImage(oldPicture);
-        //    //File.Move(oldPicture.GetFullImagePath(), pic.GetFullImagePath());
-        //    //File.Move(oldPicture.GetFullThumbnailPath(), pic.GetFullThumbnailPath());
-        //}
-
     }
 }

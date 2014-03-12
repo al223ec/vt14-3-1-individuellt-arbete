@@ -31,25 +31,24 @@ namespace ImageGallery.Pages.ImageGalleryPages
         {
             if (ModelState.IsValid)
             {
-                Service.AddAlbum(album);
+                Service.AddUpdateAlbum(album);
             }
         }
         // The id parameter name should match the DataKeyNames value set on the control
-        public void AlbumListView_UpdateItem(int id)
+        public void AlbumListView_UpdateItem(int albumId)
         {
-            ImageGallery.Model.Album item = null;
+            Album album = Service.GetAlbum(albumId);
             // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (item == null)
+            if (album == null)
             {
                 // The item wasn't found
-                ModelState.AddModelError("", String.Format("Item with id {0} was not found", id));
+                ModelState.AddModelError("", String.Format("Item with id {0} was not found", albumId));
                 return;
             }
-            TryUpdateModel(item);
+            TryUpdateModel(album);
             if (ModelState.IsValid)
             {
-                // Save changes here, e.g. MyDataLayer.SaveChanges();
-
+                Service.AddUpdateAlbum(album);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="SiteTemplate.master.cs" Inherits="ImageGallery.Pages.Shared.SiteTemplate" ViewStateMode="Disabled" %>
 
+<%@ Register Src="~/Pages/Shared/Navigation.ascx" TagPrefix="uc" TagName="navigation" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -14,16 +15,8 @@
         <div>
             <p class="heading">3-1 - Individuellt arbete</p>
             <h1>Bildgalleriet </h1>
-            <nav>
-                <ul>
-                    <li id="Li1" runat="server">
-                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Album</asp:HyperLink></li>
-   <%--                 <li runat="server">
-                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=Categories %>'>Kategorier</asp:HyperLink></li>
-                    <li runat="server">
-                        <asp:HyperLink runat="server" NavigateUrl='<%$ RouteUrl:routename=NewPicture %>'>Ny bild</asp:HyperLink></li>--%>
-                </ul>
-            </nav>
+
+            <uc:navigation runat="server" />
 
             <asp:ContentPlaceHolder ID="ContentPlaceHolder" runat="server">
             </asp:ContentPlaceHolder>

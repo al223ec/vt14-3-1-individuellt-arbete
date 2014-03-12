@@ -10,22 +10,21 @@ namespace ImageGallery.Model
     public abstract class PictureBase
     {
         public static readonly string FILEPATH = "~/Content/Pictures/";
-        public abstract int PictureID { get; set; }
-        public abstract string Extension { get; set; }
-        public Image Picture { get; set; }
+        public abstract string PictureFileName { get; set; }
+        public abstract string Extension { get; set; }/// Oklart
 
         public string GetTumbFileName
         {
-            get { return string.Format("{0}{1}{2}", PictureID, "_thumb", Extension); }
+            get { return string.Format("{0}{1}{2}", PictureFileName, "_thumb", Extension); }
         }
         public string GetTumbFilePath
         {
-            get { return string.Format("{0}{1}{2}{3}", FILEPATH, PictureID, "_thumb", Extension); }
+            get { return string.Format("{0}{1}{2}{3}", FILEPATH, PictureFileName, "_thumb", Extension); }
         }
 
         public string GetImagePath
         {
-            get { return string.Format("{0}{1}{2}", FILEPATH, PictureID, Extension); }
+            get { return string.Format("{0}{1}{2}", FILEPATH, PictureFileName, Extension); }
         }
     }
 }

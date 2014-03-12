@@ -61,6 +61,7 @@ namespace ImageGallery.Pages.Shared
             }
             Service.DeletePicture(pictureID);
             //TODO: FIXA SUCCESSMEDDELNADEN
+            Session["successfull"] = "Bilden togs bort";
             Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
         }
 

@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsF1C6.tmp\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsA0F9.tmp\Debug\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -37,7 +37,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IntermediateOutputPath>C:\Users\Anton\AppData\Local\Temp\vsF1C6.tmp\Release\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Users\al223ec\AppData\Local\Temp\vsA0F9.tmp\Release\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -64,7 +64,9 @@
     <Content Include="Global.asax" />
     <Content Include="Pages\ImageGalleryPages\EditPicture.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListAlbums.aspx" />
+    <Content Include="Pages\ImageGalleryPages\ListCategories.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListPictures.aspx" />
+    <Content Include="Pages\Shared\Navigation.ascx" />
     <Content Include="Pages\Shared\UploadEditPicture.ascx" />
     <Content Include="Pages\Shared\ViewDeleteAlbumPictures.ascx" />
     <Content Include="Web.config">
@@ -72,6 +74,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Extensions\ValidationExtensions.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -102,6 +105,13 @@
     <Compile Include="Pages\ImageGalleryPages\ListAlbums.aspx.designer.cs">
       <DependentUpon>ListAlbums.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ImageGalleryPages\ListCategories.aspx.cs">
+      <DependentUpon>ListCategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ImageGalleryPages\ListCategories.aspx.designer.cs">
+      <DependentUpon>ListCategories.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ImageGalleryPages\ListPictures.aspx.cs">
       <DependentUpon>ListPictures.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -111,6 +121,13 @@
     </Compile>
     <Compile Include="Pages\PageBASE.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\Navigation.ascx.cs">
+      <DependentUpon>Navigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\Navigation.ascx.designer.cs">
+      <DependentUpon>Navigation.ascx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\SiteTemplate.Master.cs">
       <DependentUpon>SiteTemplate.Master</DependentUpon>
@@ -145,7 +162,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Extensions\" />
     <Folder Include="App_GlobalResources\" />
     <Folder Include="Content\Pictures\" />
   </ItemGroup>

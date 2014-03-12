@@ -14,7 +14,8 @@
                 <dt><%#: Item.Name %></dt>
                 <dd>
                     <asp:HyperLink runat="server" NavigateUrl='<%# GetRouteUrl("ViewAlbumPictures", new { id = Item.AlbumID }) %>'>
-                            <img src="../../Content/Images/Penguins.jpg" /></asp:HyperLink>
+                        Visa bilder
+                    </asp:HyperLink>
                 </dd>
                 <dd><%#: Item.Date %></dd>
                 <dd>
@@ -27,10 +28,10 @@
         <EditItemTemplate>
             <dl>
                 <dt>
-                    <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%#: BindItem.Name %>'></asp:TextBox>
+                    <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%# BindItem.Name %>'></asp:TextBox>
                 </dt>
                 <dd>
-                    <img src="../../Content/Images/Penguins.jpg" />
+                     Visa bilder
                 </dd>
                 <dd><%#: Item.Date %></dd>
                 <%-- "Commandknappar" --%>
