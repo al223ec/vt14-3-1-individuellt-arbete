@@ -103,6 +103,7 @@ namespace ImageGallery.Pages.Shared
                         }
                         Session["successfull"] = "Uppdateringen lyckades";
                         Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
+                        Context.ApplicationInstance.CompleteRequest();
                     }
                     else
                     {
@@ -128,13 +129,14 @@ namespace ImageGallery.Pages.Shared
                 var picture = new Picture();
                 picture.PictureFileName += Path.GetExtension(FUL.FileName);
 
-                Page.TryUpdateModel(picture);
-                if (Page.ModelState.IsValid)
+                if (Page.TryUpdateModel(picture))
                 {
-                    //TODO: Klickar man två ggr på ladda upp väldigt snabbt blir det två poster
+                    //TODO: Klickar man två ggr på ladda upp väldigt snabbt blir det två poster kaos!!
                     Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue), FUL.PostedFile.InputStream);
                     Session["successfull"] = "Uppladdningen lyckades!";
-                    Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
+                    Page.Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
+                    //Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
+                    Context.ApplicationInstance.CompleteRequest();
                 }
             }
             else
