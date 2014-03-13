@@ -10,6 +10,7 @@ namespace ImageGallery.Model.DAL
     public abstract class DALBase
     {
         private static string _connectionString;
+        protected string StandardMSsqlErrorMessage = "Något gick fel i kontakten med Servern!";  
 
         public DALBase()
         {

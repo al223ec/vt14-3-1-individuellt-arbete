@@ -20,15 +20,12 @@ namespace ImageGallery.Model
 
         [Required]
         public DateTime Date { get; set; }
-
-        [Required(ErrorMessage = "Bilden måste ha en filändelse")]
-        [StringLength(6, ErrorMessage = "Filändelsen kan som mest bestå av 6 tecken.")]
-        public override string Extension { get; set; }
-
+        
         [Required(ErrorMessage = "Filen måste ha ett namn")]
-        [StringLength(20, ErrorMessage = "Filen måste ha ett namn")]
+        [StringLength(20, ErrorMessage = "Filens namn får inte vara mer än 20 tecken")]
+        [RegularExpression("[^\\s]+(\\.(?i)(jpg|png|gif))$",
+            ErrorMessage = "Filen verkar inte vara av rätt typ, Picture")]
         public override string PictureFileName { get; set; }
-
 
         public Picture()
         {
@@ -44,7 +41,7 @@ namespace ImageGallery.Model
                 Name = this.Name,
                 CategoryID = this.CategoryID,
                 Date = this.Date,
-                Extension = this.Extension
+                PictureFileName = this.PictureFileName
             };
         }
     }

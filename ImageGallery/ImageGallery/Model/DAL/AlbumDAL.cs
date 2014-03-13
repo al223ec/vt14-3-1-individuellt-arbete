@@ -47,8 +47,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -76,8 +75,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -104,8 +102,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -132,7 +129,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -158,7 +155,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -200,7 +197,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }

@@ -10,7 +10,6 @@ namespace ImageGallery.Model
 {
     public static class PictureExtensions
     {
-        private static readonly Regex ApprovedExtensions = new Regex("(.jpg|.gif|.png)", RegexOptions.IgnoreCase); //, SanitizePath;
         public static readonly string PhysicalUploadedImagesPath = Path.Combine(AppDomain.CurrentDomain.GetData("APPBASE").ToString(), @"Content\Pictures");
 
         public static string GetPath(this Picture picture)
@@ -24,7 +23,7 @@ namespace ImageGallery.Model
 
         public static string GetFullImagePath(this Picture picture)
         {
-            return Path.Combine(PhysicalUploadedImagesPath, string.Format("{0}{1}", picture.PictureFileName, picture.Extension));
+            return Path.Combine(PhysicalUploadedImagesPath, picture.PictureFileName);
         }
     }
 }

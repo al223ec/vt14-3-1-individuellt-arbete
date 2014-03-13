@@ -14,8 +14,6 @@
         RenderOuterTable="false"
         DataKeyNames="pictureID">
         <EditItemTemplate>
-            <asp:FileUpload ID="ImageFileUpload" runat="server" OnDataBinding="ImageFileUpload_DataBinding" />
-
             <asp:Label ID="NameLabel" runat="server" Text="Ange namn:" />
             <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%# BindItem.Name %>' />
             <asp:Label ID="CategoryLabel" runat="server" Text="Kategori:" />
@@ -26,7 +24,6 @@
                 DataTextField="Value"
                 DataValueField="CategoryID"
                 SelectedValue='<%# BindItem.CategoryID %>' />
-
             <p>
                 <asp:RadioButtonList ID="AlbumRadioButtonList" runat="server"
                     RepeatLayout="Flow"
@@ -41,15 +38,17 @@
         </EditItemTemplate>
         <InsertItemTemplate>
             <asp:FileUpload ID="ImageFileUpload" runat="server" OnDataBinding="ImageFileUpload_DataBinding" />
+            
+            <%-- Validering FileUpload, tomt fält och REGEX --%>
+            <asp:RequiredFieldValidator ID="FileUploadRequiredFieldValidator" runat="server" ErrorMessage="Var god välj en bild" ControlToValidate="ImageFileUpload" CssClass="error"  Text="*" Display="Dynamic" />
+            <asp:RegularExpressionValidator ID="FileUploadRegularExpressionValidator" runat="server" ErrorMessage="Fel filändelse" ControlToValidate="ImageFileUpload" ValidationExpression="^.*\.(jpg|gif|png)$" CssClass="error"  Text="*" Display="Dynamic" />
 
-            <asp:Label ID="NameLabel" runat="server" Text="Ange name" />
+            <asp:Label ID="NameLabel" runat="server" Text="Ange namn" />
             <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%# BindItem.Name %>' />
-
-            <asp:RequiredFieldValidator runat="server" ErrorMessage="Var god välj en bild" ControlToValidate="NameTextBox" CssClass="error" Text="*" Display="Dynamic" />
-
-
+            <%-- Validering NameTextBox --%>
+            <asp:RequiredFieldValidator runat="server" ErrorMessage="Var god ange ett namn för bilden" ControlToValidate="NameTextBox" CssClass="error" Text="*" Display="Dynamic" />
+            
             <asp:Label ID="CategoryLabel" runat="server" Text="Kategori:" />
-
             <asp:DropDownList ID="CategoryDropDownList" runat="server"
                 ItemType="ImageGallery.Model.Category"
                 SelectMethod="CategoryDropDownList_GetData"
@@ -67,9 +66,6 @@
             </p>
             <asp:LinkButton runat="server" Text="Ladda upp" CommandName="Insert" />
 
-            <%-- Validering, tomt fält och REGEX --%>
-            <asp:RequiredFieldValidator runat="server" ErrorMessage="Var god välj en bild" ControlToValidate="ImageFileUpload" CssClass="error"  Text="*" Display="Dynamic" />
-            <asp:RegularExpressionValidator runat="server" ErrorMessage="Fel filändelse" ControlToValidate="ImageFileUpload" ValidationExpression="^.*\.(jpg|gif|png)$" CssClass="error"  Text="*" Display="Dynamic" />
         </InsertItemTemplate>
     </asp:FormView>
 </asp:Panel>

@@ -43,7 +43,6 @@ namespace ImageGallery.Model
                     throw new ArgumentNullException("Filen är inte av rätt typ!! Gif, Jpeg eller png");
                 }
             }
-
         }
 
         public void DeletePictureFile(Picture pic)
@@ -53,6 +52,7 @@ namespace ImageGallery.Model
             File.Delete(pic.GetFullImagePath());
             File.Delete(pic.GetFullThumbnailPath());
         }
+
         public bool StreamIsValid(Stream stream)
         {
             using (var newImage = Image.FromStream(stream)) //Kastas ett undatag om filen som laddas upp inte är en bild

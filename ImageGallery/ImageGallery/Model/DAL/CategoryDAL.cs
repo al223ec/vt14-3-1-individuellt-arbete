@@ -40,7 +40,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -65,7 +65,6 @@ namespace ImageGallery.Model.DAL
                         var nameIndex = reader.GetOrdinal("Name");
                         var dateIndex = reader.GetOrdinal("Date");
                         var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                        var extensionIndex = reader.GetOrdinal("Extension");
 
                         while (reader.Read())
                         {
@@ -75,7 +74,6 @@ namespace ImageGallery.Model.DAL
                                 Name = reader.GetString(nameIndex),
                                 Date = reader.GetDateTime(dateIndex),
                                 CategoryID = reader.GetInt32(categoryIDIndex),
-                                Extension = reader.GetString(extensionIndex)
                             });
                         }
                     }
@@ -83,8 +81,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }

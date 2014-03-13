@@ -32,7 +32,6 @@ namespace ImageGallery.Model.DAL
                         var nameIndex = reader.GetOrdinal("Name");
                         var dateIndex = reader.GetOrdinal("Date");
                         var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                        var extensionIndex = reader.GetOrdinal("Extension");
                         var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
 
                         while (reader.Read())
@@ -43,7 +42,6 @@ namespace ImageGallery.Model.DAL
                                 Name = reader.GetString(nameIndex),
                                 Date = reader.GetDateTime(dateIndex),
                                 CategoryID = reader.GetInt32(categoryIDIndex),
-                                Extension = reader.GetString(extensionIndex),
                                 PictureFileName = reader.GetString(fileNameIndex)
                             });
                         }
@@ -53,8 +51,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -84,7 +81,6 @@ namespace ImageGallery.Model.DAL
                         var nameIndex = reader.GetOrdinal("Name");
                         var dateIndex = reader.GetOrdinal("Date");
                         var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                        var extensionIndex = reader.GetOrdinal("Extension");
                         var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
 
                         while (reader.Read())
@@ -95,7 +91,6 @@ namespace ImageGallery.Model.DAL
                                 Name = reader.GetString(nameIndex),
                                 Date = reader.GetDateTime(dateIndex),
                                 CategoryID = reader.GetInt32(categoryIDIndex),
-                                Extension = reader.GetString(extensionIndex),
                                 PictureFileName = reader.GetString(fileNameIndex)
                             });
                         }
@@ -104,8 +99,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -133,7 +127,6 @@ namespace ImageGallery.Model.DAL
                         var nameIndex = reader.GetOrdinal("Name");
                         var dateIndex = reader.GetOrdinal("Date");
                         var categoryIDIndex = reader.GetOrdinal("CategoryID");
-                        var extensionIndex = reader.GetOrdinal("Extension");
                         var fileNameIndex = reader.GetOrdinal("PictureFileName"); 
 
                         if (reader.Read())
@@ -144,7 +137,6 @@ namespace ImageGallery.Model.DAL
                                 Name = reader.GetString(nameIndex),
                                 Date = reader.GetDateTime(dateIndex),
                                 CategoryID = reader.GetInt32(categoryIDIndex),
-                                Extension = reader.GetString(extensionIndex),
                                 PictureFileName = reader.GetString(fileNameIndex)
                             };
                         }
@@ -153,8 +145,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -187,8 +178,7 @@ namespace ImageGallery.Model.DAL
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 35).Value = picture.Name;
                     cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
                     cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
-                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
+                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 20).Value = picture.PictureFileName;
 
                     cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
                     conn.Open();
@@ -199,8 +189,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -230,8 +219,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -252,8 +240,7 @@ namespace ImageGallery.Model.DAL
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
                     cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
                     cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                    cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
-                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
+                    cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 20).Value = picture.PictureFileName;
 
                     conn.Open();
 
@@ -261,8 +248,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -287,8 +273,7 @@ namespace ImageGallery.Model.DAL
                         cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = picture.Name;
                         cmd.Parameters.Add("@CategoryID", SqlDbType.Int, 4).Value = picture.CategoryID;
                         cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = picture.Date;
-                        cmd.Parameters.Add("@Extension", SqlDbType.VarChar, 6).Value = picture.Extension;
-                        cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 11).Value = picture.PictureFileName;
+                        cmd.Parameters.Add("@PictureFileName", SqlDbType.VarChar, 20).Value = picture.PictureFileName;
 
                         cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
                         conn.Open();
@@ -297,8 +282,7 @@ namespace ImageGallery.Model.DAL
                     }
                     catch (Exception)
                     {
-                        
-                        throw;
+                        throw new ApplicationException(StandardMSsqlErrorMessage); 
                     }
                 }
             }
@@ -330,7 +314,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
@@ -356,8 +340,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    
-                    throw;
+                    throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }

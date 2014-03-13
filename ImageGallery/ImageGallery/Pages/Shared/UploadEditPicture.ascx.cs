@@ -76,6 +76,11 @@ namespace ImageGallery.Pages.Shared
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                {
+                    return;
+                }
                 Picture picture = Service.GetPicture(pictureID);
                 if (picture == null)
                 {
@@ -113,10 +118,15 @@ namespace ImageGallery.Pages.Shared
 
         public void UploadFormView_InsertItem()
         {
+            Page.Validate();
+            if (!Page.IsValid)
+            {
+                return;
+            }
             if (FUL.PostedFile.ContentLength != 0)
             {
                 var picture = new Picture();
-                picture.Extension = Path.GetExtension(FUL.FileName);
+                picture.PictureFileName += Path.GetExtension(FUL.FileName);
 
                 Page.TryUpdateModel(picture);
                 if (Page.ModelState.IsValid)
@@ -144,10 +154,6 @@ namespace ImageGallery.Pages.Shared
             if (fileUpload != null)
             {
                 FUL = fileUpload;
-                if (ViewMode == FormViewMode.Edit)
-                {
-                    FUL.Visible = false;
-                }
             }
         }
     }
