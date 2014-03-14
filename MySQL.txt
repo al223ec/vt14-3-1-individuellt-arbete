@@ -1,0 +1,78 @@
+﻿CREATE DATABASE `al223ec_faktura` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`artikel`;
+CREATE TABLE  `al223ec_faktura`.`artikel` (
+  `ArtikelID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ArtNamn` varchar(15) NOT NULL,
+  `Antal` smallint(5) unsigned NOT NULL,
+  `Pris` decimal(6,2) NOT NULL,
+  `Rabatt` decimal(6,2) NOT NULL,
+  PRIMARY KEY (`ArtikelID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`faktura`;
+CREATE TABLE  `al223ec_faktura`.`faktura` (
+  `FakturaID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Datum` date NOT NULL,
+  `Betalvillkor` tinyint(3) unsigned NOT NULL DEFAULT '30',
+  `KundID` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`FakturaID`),
+  KEY `FK_Faktura_1` (`KundID`),
+  CONSTRAINT `FK_Faktura_1` FOREIGN KEY (`KundID`) REFERENCES `kund` (`KundID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`fakturarad`;
+CREATE TABLE  `al223ec_faktura`.`fakturarad` (
+  `RadID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `FakturaID` int(10) unsigned NOT NULL,
+  `ArtikelID` int(10) unsigned NOT NULL,
+  `Antal` smallint(5) unsigned NOT NULL,
+  `Pris` decimal(6,2) unsigned NOT NULL,
+  `Rabat` decimal(2,2) unsigned NOT NULL DEFAULT '0.25',
+  `MomsID` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`RadID`),
+  KEY `FK_Fakturarad_1` (`FakturaID`),
+  KEY `FK_Fakturarad_2` (`ArtikelID`),
+  KEY `FK_Fakturarad_3` (`MomsID`),
+  CONSTRAINT `FK_Fakturarad_1` FOREIGN KEY (`FakturaID`) REFERENCES `faktura` (`FakturaID`),
+  CONSTRAINT `FK_Fakturarad_2` FOREIGN KEY (`ArtikelID`) REFERENCES `artikel` (`ArtikelID`),
+  CONSTRAINT `FK_Fakturarad_3` FOREIGN KEY (`MomsID`) REFERENCES `moms` (`MomsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`kund`;
+CREATE TABLE  `al223ec_faktura`.`kund` (
+  `KundID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Namn` varchar(40) NOT NULL,
+  `Adress` varchar(30) NOT NULL,
+  `Postnr` varchar(6) NOT NULL,
+  `Ort` varchar(25) NOT NULL,
+  PRIMARY KEY (`KundID`),
+  KEY `Index_2` (`Namn`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`moms`;
+CREATE TABLE  `al223ec_faktura`.`moms` (
+  `MomsID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Moms` decimal(2,2) NOT NULL,
+  PRIMARY KEY (`MomsID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`telefon`;
+CREATE TABLE  `al223ec_faktura`.`telefon` (
+  `TelID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Telenr` varchar(15) NOT NULL,
+  `TelTypID` int(10) unsigned NOT NULL,
+  `KundID` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`TelID`,`TelTypID`) USING BTREE,
+  KEY `FK_Telefon_1` (`KundID`),
+  KEY `FK_telefon_2` (`TelTypID`),
+  CONSTRAINT `FK_telefon_2` FOREIGN KEY (`TelTypID`) REFERENCES `teltyp` (`TelTypID`),
+  CONSTRAINT `FK_Telefon_1` FOREIGN KEY (`KundID`) REFERENCES `kund` (`KundID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `al223ec_faktura`.`teltyp`;
+CREATE TABLE  `al223ec_faktura`.`teltyp` (
+  `TelTypID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `TelTyp` varchar(10) NOT NULL,
+  PRIMARY KEY (`TelTypID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
