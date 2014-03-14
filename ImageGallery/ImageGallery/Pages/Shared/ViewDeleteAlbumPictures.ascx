@@ -1,6 +1,4 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ViewDeleteAlbumPictures.ascx.cs" Inherits="ImageGallery.Pages.Shared.ViewEditAlbumPictures" %>
-
-<%@ Register Src="~/Pages/Shared/UploadEditPicture.ascx" TagPrefix="uc1" TagName="UploadEditPicture" %>
 <h2>
     <asp:Literal ID="ImageNameLiteral" runat="server"></asp:Literal></h2>
 
@@ -43,8 +41,7 @@
     </ItemTemplate>
     <EmptyDataTemplate>
         <p>
-            Fail!! Inga bilder kan hittas vg försök igen
+            Inga bilder kan hittas vg försök igen
         </p>
     </EmptyDataTemplate>
 </asp:ListView>
-<uc1:UploadEditPicture runat="server" AlbumID='<%$ RouteValue:id %>' />

@@ -16,46 +16,55 @@ namespace ImageGallery.Pages.ImageGalleryPages
         protected void Page_Load(object sender, EventArgs e)
         { }
 
-        // The return type can be changed to IEnumerable, however to support
-        // paging and sorting, the following parameters must be added:
-        //     int maximumRows
-        //     int startRowIndex
-        //     out int totalRowCount
-        //     string sortByExpression
         public IEnumerable<Album> AlbumListView_GetData()
         {
-            return Service.GetAllAlbums();
-        }
-
-        public void AlbumListView_InsertItem(Album album)
-        {
-            if (ModelState.IsValid)
+            try
             {
-                Service.AddUpdateAlbum(album);
+                return Service.GetAllAlbums();
+            }
+            catch (Exception)
+            {
+                throw new ApplicationException("Något oväntat gick fel");
             }
         }
-        // The id parameter name should match the DataKeyNames value set on the control
+
+
         public void AlbumListView_UpdateItem(int albumId)
         {
-            Album album = Service.GetAlbum(albumId);
-            // Load the item here, e.g. item = MyDataLayer.Find(id);
-            if (album == null)
+            try
             {
-                // The item wasn't found
-                ModelState.AddModelError("", String.Format("Item with id {0} was not found", albumId));
-                return;
+                Album album = Service.GetAlbum(albumId);
+                if (album == null)
+                {
+                    ModelState.AddModelError("", String.Format("Kunde inte hitta det aktuella albummet {0}!!", albumId));
+                    return;
+                }
+
+                if (TryUpdateModel(album))
+                {
+                    Service.AddUpdateAlbum(album);
+                    Response.RedirectToRoute("Default");
+                    Context.ApplicationInstance.CompleteRequest();
+                }
             }
-            TryUpdateModel(album);
-            if (ModelState.IsValid)
+            catch (Exception)
             {
-                Service.AddUpdateAlbum(album);
+                ModelState.AddModelError("", "Något oväntat gick fel, vg försök igen");
             }
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
         public void AlbumListView_DeleteItem(int albumID)
         {
-            Service.DeleteAlbum(albumID);
+            try
+            {
+                Service.DeleteAlbum(albumID);
+                Response.RedirectToRoute("Default");
+                Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (Exception)
+            {
+                throw new ApplicationException("Något oväntat gick fel");
+            }
         }
     }
 }

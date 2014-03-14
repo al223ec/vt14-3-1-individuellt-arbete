@@ -66,6 +66,8 @@
     <Content Include="Pages\ImageGalleryPages\ListAlbums.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListCategories.aspx" />
     <Content Include="Pages\ImageGalleryPages\ListPictures.aspx" />
+    <Content Include="Pages\Shared\AddAlbum.ascx" />
+    <Content Include="Pages\Shared\Error.aspx" />
     <Content Include="Pages\Shared\Navigation.ascx" />
     <Content Include="Pages\Shared\UploadEditPicture.ascx" />
     <Content Include="Pages\Shared\ViewDeleteAlbumPictures.ascx" />
@@ -121,6 +123,20 @@
     </Compile>
     <Compile Include="Pages\PageBASE.cs">
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\AddAlbum.ascx.cs">
+      <DependentUpon>AddAlbum.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\AddAlbum.ascx.designer.cs">
+      <DependentUpon>AddAlbum.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Shared\Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Shared\Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\Shared\Navigation.ascx.cs">
       <DependentUpon>Navigation.ascx</DependentUpon>

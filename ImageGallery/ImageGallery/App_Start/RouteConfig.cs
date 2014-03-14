@@ -20,6 +20,8 @@ namespace ImageGallery.App_Start
 
             routeCollection.MapPageRoute("NewPicture", "", "~/Pages/ImageGalleryPages/EditPicture.aspx");
 
+            routeCollection.MapPageRoute("Error", "serverfel", "~/Pages/Shared/Error.aspx");
+
             routeCollection.MapPageRoute("ListPictures", "Bilder", "~/Pages/ImageGalleryPages/ListPictures.aspx");
             routeCollection.MapPageRoute("EditPicture", "Redigerabild/{id}/{pictureID}", "~/Pages/ImageGalleryPages/EditPicture.aspx");
 

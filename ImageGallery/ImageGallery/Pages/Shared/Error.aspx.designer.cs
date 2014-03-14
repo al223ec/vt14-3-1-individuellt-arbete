@@ -7,27 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ImageGallery.Pages.ImageGalleryPages {
+namespace ImageGallery.Pages.Shared {
     
     
-    public partial class ListAlbums {
+    public partial class Error {
         
         /// <summary>
-        /// AlbumListView control.
+        /// HyperLink1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView AlbumListView;
-        
-        /// <summary>
-        /// InsertAlbumValidationSummary control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary InsertAlbumValidationSummary;
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
     }
 }
