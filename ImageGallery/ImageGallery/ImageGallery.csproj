@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Shared\SiteTemplate.Master" />
+    <None Include="Properties\PublishProfiles\al223ec.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

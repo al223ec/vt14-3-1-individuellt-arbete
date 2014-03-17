@@ -189,8 +189,7 @@ namespace ImageGallery.Model.DAL
                 }
                 catch (Exception)
                 {
-                    throw;
-                    throw new ApplicationException(StandardMSsqlErrorMessage); 
+                       throw new ApplicationException(StandardMSsqlErrorMessage); 
                 }
             }
         }
