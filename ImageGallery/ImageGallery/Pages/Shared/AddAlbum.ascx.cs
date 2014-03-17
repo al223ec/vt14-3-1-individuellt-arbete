@@ -17,7 +17,7 @@ namespace ImageGallery.Pages.Shared
         {
             try
             {
-                Page.Validate();
+                Page.Validate("InsertAlbum");
                 if (Page.IsValid)
                 {
                     var album = new Album();

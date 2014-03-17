@@ -16,6 +16,7 @@
         <EditItemTemplate>
             <asp:Label ID="NameLabel" runat="server" Text="Ange namn:" />
             <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%# BindItem.Name %>' />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Var god ange ett namn för bilden" ControlToValidate="NameTextBox" CssClass="error" Text="*" Display="Dynamic" />
             <asp:Label ID="CategoryLabel" runat="server" Text="Kategori:" />
 
             <asp:DropDownList ID="CategoryDropDownList" runat="server"

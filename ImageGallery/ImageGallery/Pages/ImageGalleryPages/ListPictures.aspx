@@ -18,7 +18,6 @@
 
     <uc:ViewDeleteAlbumPictures runat="server" ID="ViewDeleteAlbumPictures" AlbumID="<%$ RouteValue:id %>" />
 
-
     <p>
         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl='<%$ RouteUrl:routename=Default %>'>Tillbaka</asp:HyperLink>
     </p>

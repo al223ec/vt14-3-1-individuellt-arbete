@@ -10,6 +10,7 @@ namespace ImageGallery.Model
 {
     public class Service
     {
+        #region Lazy
         private PictureDAL _pictureDAL;
         public PictureDAL PictureDAL { get { return _pictureDAL ?? (_pictureDAL = new PictureDAL()); } }
 
@@ -21,7 +22,7 @@ namespace ImageGallery.Model
 
         private PictureHandler _pictureHandler;
         public PictureHandler PictureHandler { get { return _pictureHandler ?? (_pictureHandler = new PictureHandler()); } }
-
+        #endregion Lazy
         #region Getpictures
         public IEnumerable<Picture> GetAllPictures()
         {
@@ -68,19 +69,37 @@ namespace ImageGallery.Model
 
         public void DeleteAlbum(int albumID)
         {
-            AlbumDAL.DeleteAlbum(albumID);
+            try
+            {
+                AlbumDAL.DeleteAlbum(albumID);
+            }
+            catch (AlbumHavePicturesException e)
+            {
+                throw e;
+            }
+            catch (Exception)
+            {
+                throw new ApplicationException("Något oväntat gick fel vg försök igen!");
+            }
         }
 
         public void AddUpdateAlbum(Album album)
         {
             ValidateObject(album);
-            if (album.AlbumID != 0) //Existerar uppdaterar 
+            try
             {
-                AlbumDAL.UpdateAlbum(album);
+                if (album.AlbumID != 0) //Existerar uppdaterar 
+                {
+                    AlbumDAL.UpdateAlbum(album);
+                }
+                else
+                {
+                    AlbumDAL.AddAlbum(album);
+                }
             }
-            else
+            catch (Exception)
             {
-                AlbumDAL.AddAlbum(album);
+                throw new ApplicationException("Något oväntat gick fel vg försök igen!");
             }
         }
 
@@ -126,6 +145,7 @@ namespace ImageGallery.Model
         /// <param name="albumID">Vilket album bilden ska tillghöra</param>
         public void AddPictureToAlbum(Picture picture, int albumID, Stream stream = null)
         {
+
             ValidateObject(picture); //Validerar Picture utifrån dess dataAnnotations
             if (picture.PictureID == 0) //Ny bild
             {
@@ -142,7 +162,14 @@ namespace ImageGallery.Model
             }
             else
             {
-                PictureDAL.UpdateExistingPictureToAlbum(picture, albumID);
+                try
+                {
+                    PictureDAL.UpdateExistingPictureToAlbum(picture, albumID);
+                }
+                catch (PictureExistsInAlbumException e)
+                {
+                    throw e;
+                }
             }
         }
     }

@@ -44,7 +44,7 @@ namespace ImageGallery.Pages.Shared
         public IEnumerable<Album> AlbumRadioButtonList_GetData() { return Service.GetAllAlbums(); }
 
         /// <summary>
-        /// Binder data till album Radio button listan
+        /// Väljer aktuell RBL item som ska vara vald
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -64,14 +64,11 @@ namespace ImageGallery.Pages.Shared
             }
         }
 
-        // The id parameter should match the DataKeyNames value set on the control
-        // or be decorated with a value provider attribute, e.g. [QueryString]int id
         public Picture UploadFormView_GetItem([RouteData]int pictureID)
         {
             return Service.GetPicture(pictureID);
         }
 
-        // The id parameter name should match the DataKeyNames value set on the control
         public void UploadFormView_UpdateItem(int pictureID)
         {
             try
@@ -135,7 +132,6 @@ namespace ImageGallery.Pages.Shared
                     Service.AddPictureToAlbum(picture, int.Parse(RBL.SelectedValue), FUL.PostedFile.InputStream);
                     Session["successfull"] = "Uppladdningen lyckades!";
                     Page.Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
-                    //Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
                     Context.ApplicationInstance.CompleteRequest();
                 }
             }

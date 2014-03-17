@@ -18,14 +18,7 @@ namespace ImageGallery.Pages.ImageGalleryPages
 
         public IEnumerable<Album> AlbumListView_GetData()
         {
-            try
-            {
-                return Service.GetAllAlbums();
-            }
-            catch (Exception)
-            {
-                throw new ApplicationException("Något oväntat gick fel");
-            }
+            return Service.GetAllAlbums();
         }
 
 
@@ -33,6 +26,11 @@ namespace ImageGallery.Pages.ImageGalleryPages
         {
             try
             {
+                Page.Validate("EditAlbum");
+                if (!Page.IsValid)
+                {
+                    return;
+                }
                 Album album = Service.GetAlbum(albumId);
                 if (album == null)
                 {
@@ -61,9 +59,13 @@ namespace ImageGallery.Pages.ImageGalleryPages
                 Response.RedirectToRoute("Default");
                 Context.ApplicationInstance.CompleteRequest();
             }
+            catch (AlbumHavePicturesException)
+            {
+                ModelState.AddModelError("", "Albummet har tillhörande bilder vg tag bort dessa först och försök igen");
+            }
             catch (Exception)
             {
-                throw new ApplicationException("Något oväntat gick fel");
+                ModelState.AddModelError("", "Något oväntat gick fel, vg försök igen");
             }
         }
     }

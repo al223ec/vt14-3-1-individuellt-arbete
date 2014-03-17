@@ -23,12 +23,10 @@ namespace ImageGallery.Pages.Shared
                 ImageNameLiteral.Visible = true;
             }
         }
-        // The return type can be changed to IEnumerable, however to support
-        // paging and sorting, the following parameters must be added:
-        //     int maximumRows
-        //     int startRowIndex
-        //     out int totalRowCount
-        //     string sortByExpression
+        /// <summary>
+        /// Returnerar alla bilder från det aktuella albummet, 
+        /// </summary>
+        /// <returns>Pictures alt null om inga bilder finns</returns>
         public IEnumerable<Picture> PictureListView_GetData()
         {
             if (AlbumID != null)
@@ -60,9 +58,9 @@ namespace ImageGallery.Pages.Shared
                 ImageNameLiteral.Visible = false;
             }
             Service.DeletePicture(pictureID);
-            //TODO: FIXA SUCCESSMEDDELNADEN
             Session["successfull"] = "Bilden togs bort";
             Response.RedirectToRoute("ViewAlbumPictures", new { id = AlbumID });
+            Context.ApplicationInstance.CompleteRequest();
         }
 
         public IEnumerable<Category> CategoryDropDownList_GetData()

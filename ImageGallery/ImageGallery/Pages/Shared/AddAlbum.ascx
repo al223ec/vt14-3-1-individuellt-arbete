@@ -8,10 +8,10 @@
             <p>
                 <asp:Label ID="AlbumNameLabel" runat="server" Text="Ange albumnamnet"></asp:Label>
                 <asp:TextBox ID="NewAlbumNameTextBox" runat="server" MaxLength="35" Text='<%#: BindItem.Name %>' ValidationGroup="InsertAlbum" />
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="NewAlbumNameTextBox" Text="*" CssClass="error" Display="Dynamic" ValidationGroup="InsertAlbum"></asp:RequiredFieldValidator>
+                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Du måste ange ett namn på albummet" ControlToValidate="NewAlbumNameTextBox" Text="*" CssClass="error" Display="Dynamic" ValidationGroup="InsertAlbum"></asp:RequiredFieldValidator>
 
                 <%-- "Commandknappar" --%>
-                <asp:LinkButton ID="LinkButton3" runat="server" CommandName="Insert" Text="Lägg till" />
+                <asp:LinkButton ID="LinkButton3" runat="server" CommandName="Insert" Text="Lägg till" ValidationGroup="InsertAlbum" />
                 <asp:LinkButton ID="LinkButton4" runat="server" CommandName="Cancel" Text="Rensa" CausesValidation="false" />
             </p>
 

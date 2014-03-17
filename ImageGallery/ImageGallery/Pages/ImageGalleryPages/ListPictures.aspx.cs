@@ -19,15 +19,6 @@ namespace ImageGallery.Pages.ImageGalleryPages
                 OutputLiteral.Text = Session["successfull"].ToString();
                 Session.Remove("successfull");
             }
-
-            ////TODO: Behövs denna, kan använda modelstateerror
-            //if (Session["error"] != null)
-            //{
-            //    OutputPanel.Visible = true;
-            //    HeaderOutputLiteral.Text = "Något misslyckades";
-            //    OutputLiteral.Text = Session["error"].ToString();
-            //    Session.Remove("error");
-            //}
         }
     }
 }

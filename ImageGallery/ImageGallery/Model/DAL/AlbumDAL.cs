@@ -112,25 +112,32 @@ namespace ImageGallery.Model.DAL
         /// <param name="albumID">Albumets NPK</param>
         public void DeleteAlbum(int albumID)
         {
-            //KASTAR UNDANTAG OM DET FINNS BILDER SOM TILLHÖR ALBUMM OMG!!!!!!!"
+            //KASTAR UNDANTAG OM DET FINNS BILDER SOM TILLHÖR ALBUMM!!!!!!!"
             //Kanske fixa en stored procedure eller?? 
             //TODO: Fixa ta bort album med tillhörande bilder.
-            using (SqlConnection conn = CreateConnection())
+            if (!AlbumHavePictures(albumID))
             {
-                try
+                using (SqlConnection conn = CreateConnection())
                 {
-                    SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteAlbum", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    try
+                    {
+                        SqlCommand cmd = new SqlCommand("appSchema.usp_DeleteAlbum", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                        cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
 
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        throw new ApplicationException(StandardMSsqlErrorMessage);
+                    }
                 }
-                catch (Exception)
-                {
-                    throw new ApplicationException(StandardMSsqlErrorMessage); 
-                }
+            }
+            else
+            {
+                throw new AlbumHavePicturesException();
             }
         }
         /// <summary>
@@ -198,6 +205,35 @@ namespace ImageGallery.Model.DAL
                 catch (Exception)
                 {
                     throw new ApplicationException(StandardMSsqlErrorMessage); 
+                }
+            }
+        }
+        /// <summary>
+        /// Kontrollerar om ett album har tillhörande bilder, returnerar true om så är fallet
+        /// </summary>
+        /// <param name="albumID">Albumets PK</param>
+        /// <returns></returns>
+        private bool AlbumHavePictures(int albumID)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("appSchema.usp_AlbumHavePictures", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@HasPictures", SqlDbType.Bit).Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.Add("@AlbumID", SqlDbType.Int, 4).Value = albumID;
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+
+                    return (bool)cmd.Parameters["@HasPictures"].Value; //True om albummet har bilder associerat
+                }
+                catch (Exception)
+                {
+                    throw new ApplicationException(StandardMSsqlErrorMessage);
                 }
             }
         }

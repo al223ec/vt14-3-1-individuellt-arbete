@@ -28,14 +28,14 @@
             <dl>
                 <dt>
                     <asp:TextBox ID="NameTextBox" runat="server" MaxLength="35" Text='<%# BindItem.Name %>'></asp:TextBox>
-                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" Text="*" ControlToValidate="NameTextBox" CssClass="error" Display="Dynamic" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator" runat="server" ErrorMessage="Detta fält får inte vara tomt" Text="*" ControlToValidate="NameTextBox" CssClass="error" Display="Dynamic" ValidationGroup="EditAlbum" />
                 </dt>
                 <dd>Visa bilder
                 </dd>
                 <dd><%#: Item.Date %></dd>
-                <%-- "Commandknappar" --%>
+                <%-- Commandknappar --%>
                 <dd>
-                    <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Update" Text="Spara" />
+                    <asp:LinkButton ID="LinkButton1" runat="server" CommandName="Update" Text="Spara" ValidationGroup="EditAlbum"/>
                     <asp:LinkButton ID="LinkButton2" runat="server" CommandName="Cancel" Text="Avbryt" CausesValidation="false" />
                 </dd>
             </dl>
@@ -47,7 +47,6 @@
         </EmptyDataTemplate>
     </asp:ListView>
 
-    <asp:ValidationSummary ID="InsertAlbumValidationSummary" runat="server" ValidationGroup="InsertAlbum" />
-
+    <asp:ValidationSummary ID="InsertAlbumValidationSummary" runat="server" ValidationGroup="InsertAlbum" CssClass="error"/>
     <uc:AddAlbum runat="server" />
 </asp:Content>

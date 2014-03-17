@@ -81,7 +81,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Model\Album.cs" />
+    <Compile Include="Model\Album\Album.cs" />
+    <Compile Include="Model\Album\AlbumHavePicturesException.cs" />
     <Compile Include="Model\Category.cs" />
     <Compile Include="Model\DAL\AlbumDAL.cs" />
     <Compile Include="Model\DAL\CategoryDAL.cs" />
