@@ -47,6 +47,6 @@
         </EmptyDataTemplate>
     </asp:ListView>
 
-    <asp:ValidationSummary ID="InsertAlbumValidationSummary" runat="server" ValidationGroup="InsertAlbum" CssClass="error"/>
+    <asp:ValidationSummary ID="InsertAlbumValidationSummary" runat="server" ValidationGroup="InsertAlbum" CssClass="error" ShowModelStateErrors="False" />
     <uc:AddAlbum runat="server" />
 </asp:Content>
